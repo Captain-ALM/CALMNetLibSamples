@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("CALMNetLibSamples")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("CALMNetLibSamples")> 
-<Assembly: AssemblyCopyright("Copyright ©  2019")> 
+<Assembly: AssemblyTitle("CALMNetLibSampleExtLib")> 
+<Assembly: AssemblyDescription("CALMNetLib Sample Extension Library")> 
+<Assembly: AssemblyCompany("Captain ALM")> 
+<Assembly: AssemblyProduct("CALMNetLib Sample Extension Library")> 
+<Assembly: AssemblyCopyright("Copyright © Captain ALM 2019")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("0.0.0.0")> 
+<Assembly: AssemblyFileVersion("0.0.0.0")> 

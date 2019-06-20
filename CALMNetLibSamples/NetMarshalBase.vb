@@ -34,9 +34,21 @@ Public MustInherit Class NetMarshalBase
 
     Public MustOverride ReadOnly Property ready As Boolean
 
-    Public MustOverride ReadOnly Property internalSocket As INetSocket
+    Public Overridable ReadOnly Property internalSocket As INetSocket
+        Get
+            Return _cl
+        End Get
+    End Property
 
     Public MustOverride Function sendMessage(msg As Message) As Boolean
 
     Protected MustOverride Sub t_exec()
+
+    Protected Sub raiseExceptionRaised(ex As Exception)
+        RaiseEvent exceptionRaised(ex)
+    End Sub
+
+    Protected Sub raiseMessageRecieved(msg As Message)
+        RaiseEvent messageRecieved(msg)
+    End Sub
 End Class
