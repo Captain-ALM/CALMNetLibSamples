@@ -81,6 +81,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="NetMarshalBase.vb" />
+    <Compile Include="NetMarshalTCP.vb" />
     <Compile Include="NetMarshalUDP.vb" />
   </ItemGroup>
   <ItemGroup>
