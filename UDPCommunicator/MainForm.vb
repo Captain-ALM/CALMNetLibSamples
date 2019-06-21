@@ -205,6 +205,7 @@ Partial Public Class MainForm
                     Return
                 End If
                 nmsg.wassent = True
+                nmsg.sndnom = "Me"
                 lstmsg.Add(nmsg)
                 cmarshal.sendMessage(nmsg.msg)
             End If

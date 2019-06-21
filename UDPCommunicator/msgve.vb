@@ -148,7 +148,7 @@ Public Partial Class msgve
     Public Function genmsgs() As Mail()
         Dim msgs As New List(Of mail)
         For Each c As Reg In addrs
-            msgs.Add(New Mail(0, txtbxheader.Text, txtbxdat.Text, c.pip, c.pport, c.ip.ToString(), c.port))
+            msgs.Add(New Mail(0, txtbxheader.Text, txtbxdat.Text, c.pip, c.pport, c.ip.ToString(), c.port) With {.sndnom = "Me"})
         Next
         Return msgs.ToArray()
     End Function

@@ -14,7 +14,7 @@ Public Partial Class addrec
 		' The Me.InitializeComponent call is required for Windows Forms designer support.
 		Me.InitializeComponent()
         regs = New List(Of Reg)
-		regs.AddRange(lstreg)
+        regs.AddRange(lstreg.Values)
 		'
 		' TODO : Add constructor code after InitializeComponents
 		'
