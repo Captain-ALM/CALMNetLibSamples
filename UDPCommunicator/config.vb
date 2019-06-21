@@ -35,9 +35,17 @@ Public Class config
         End If
         If txtbxripaddress.Text = "" Then
             If selected_interface.AddressFamily = AddressFamily.InterNetwork Then
-                txtbxripaddress.Text = IPAddress.Loopback.ToString()
+                If selected_interface.Equals(IPAddress.Any) Then
+                    txtbxripaddress.Text = IPAddress.Loopback.ToString()
+                Else
+                    txtbxripaddress.Text = selected_interface.ToString()
+                End If
             ElseIf selected_interface.AddressFamily = AddressFamily.InterNetworkV6 Then
-                txtbxripaddress.Text = IPAddress.IPv6Loopback.ToString()
+                If selected_interface.Equals(IPAddress.IPv6Any) Then
+                    txtbxripaddress.Text = IPAddress.IPv6Loopback.ToString()
+                Else
+                    txtbxripaddress.Text = selected_interface.ToString()
+                End If
             End If
         End If
         Dim cip As Boolean = False
@@ -51,11 +59,11 @@ Public Class config
             cip = True
         End Try
         If cip Then
-            MsgBox("The IP Address you entered was Invalid! The IP Address is now <Loopback>.", MsgBoxStyle.Exclamation, "Information!")
+            MsgBox("The IP Address you entered was Invalid! The IP Address is now <None>.", MsgBoxStyle.Exclamation, "Information!")
             If selected_interface.AddressFamily = AddressFamily.InterNetwork Then
-                prip = IPAddress.Loopback.ToString()
+                prip = IPAddress.None.ToString()
             ElseIf selected_interface.AddressFamily = AddressFamily.InterNetworkV6 Then
-                prip = IPAddress.IPv6Loopback.ToString()
+                prip = IPAddress.IPv6None.ToString()
             End If
         End If
         Me.DialogResult = System.Windows.Forms.DialogResult.OK

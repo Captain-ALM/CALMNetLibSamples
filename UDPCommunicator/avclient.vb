@@ -104,7 +104,7 @@ Partial Public Class avclient
         Else
             If cip Then
                 If addrfam = AddressFamily.InterNetwork Then
-                    txtbxipaddress.Text = "255.255.255.255"
+                    txtbxipaddress.Text = IPAddress.None.ToString()
                 ElseIf addrfam = AddressFamily.InterNetworkV6 Then
                     txtbxipaddress.Text = IPAddress.IPv6None.ToString()
                 End If
@@ -137,7 +137,7 @@ Partial Public Class avclient
             Me.Text = "Add UDP Client"
             Label2.Text = "Add Client:"
             If addrfam = AddressFamily.InterNetwork Then
-                txtbxipaddress.Text = "255.255.255.255"
+                txtbxipaddress.Text = IPAddress.None.ToString()
             ElseIf addrfam = AddressFamily.InterNetworkV6 Then
                 txtbxipaddress.Text = IPAddress.IPv6None.ToString()
             End If
@@ -153,6 +153,8 @@ Partial Public Class avclient
         ElseIf mode = avmode.View Then
             Me.Text = "View UDP Client"
             Label2.Text = "View Client:"
+            txtbxnom.Text = reg.name
+            txtbxnom.ReadOnly = True
             txtbxipaddress.Text = reg.ip
             txtbxripaddress.Text = reg.pip
             nudport.Value = reg.port

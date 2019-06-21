@@ -43,10 +43,12 @@ Partial Public Class MainForm
     End Sub
 
     Private Sub msgRec(msg As captainalm.CALMNetLibSamples.extlib.Message)
-        Dim cr As Reg = New Reg(msg.senderIP, msg.senderPort)
+        Dim cr As Reg = New Reg(msg.senderIP, msg.senderPort) With {.pip = prip, .pport = prport}
         Dim e As Boolean = exists(cr)
         If Not e Then
             lstreg.Add(cr.name, cr)
+        Else
+            cr = lstreg(getname(cr))
         End If
         lstmsg.Add(New Mail(msg) With {.wassent = False, .refnum = 0, .sndnom = cr.name})
         drfrsh = True
@@ -99,7 +101,7 @@ Partial Public Class MainForm
     End Sub
 
     Sub Butcmadd_Click(sender As Object, e As EventArgs) Handles butcmadd.Click
-        Dim frm As New avclient()
+        Dim frm As New avclient(avmode.New)
         If frm.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
             If Not lstreg.ContainsKey(frm.reg.name) And Not exists(frm.reg) Then lstreg.Add(frm.reg.name, frm.reg)
             drfrsh = True
@@ -212,7 +214,8 @@ Partial Public Class MainForm
                     nmsg.senderaddr = lstreg(smsg.sndnom).pip
                     nmsg.senderport = lstreg(smsg.sndnom).pport
                 Else
-                    Return
+                    nmsg.senderaddr = prip
+                    nmsg.senderport = prport
                 End If
                 nmsg.wassent = True
                 nmsg.sndnom = "Me"
@@ -246,6 +249,15 @@ Partial Public Class MainForm
     Sub Lstvmm_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstvmm.SelectedIndexChanged
         If Not splitContainer2.Panel2Collapsed Then
             upprev()
+        End If
+    End Sub
+
+    Private Sub butcmci_Click(sender As Object, e As EventArgs) Handles butcmci.Click
+        If lstvcm.SelectedIndices.Count = 1 Then
+            Dim frm As New avclient(avmode.View, lstreg(lstvcm.SelectedItems(0).Text))
+            frm.ShowDialog(Me)
+            If Not frm.Disposing And Not frm.IsDisposed Then frm.Dispose()
+            frm = Nothing
         End If
     End Sub
 End Class

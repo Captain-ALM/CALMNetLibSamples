@@ -24,6 +24,15 @@ Partial Public Class MainForm
                 uplstvcm()
                 uplstvmm()
                 upprev()
+                If cmarshal Is Nothing Then
+                    lblstatus.Text = ""
+                Else
+                    If cmarshal.ready Then
+                        lblstatus.Text = "Listening."
+                    Else
+                        lblstatus.Text = "Not Listening."
+                    End If
+                End If
             End SyncLock
         End If
     End Sub
@@ -66,34 +75,42 @@ Partial Public Class MainForm
         SyncLock slockupprev
             txtbxmpv.Text = ""
             If lstvmm.SelectedIndices.Count = 1 Then
-                Dim smsg As Mail = lstmsg(lstvmm.SelectedIndices(0))
-                If smsg.wassent Then
-                    txtbxmpv.Text &= "Reciver: " & smsg.recaddr & ":" & smsg.recport & Chr(13) & Chr(10)
-                    txtbxmpv.Text &= "Header: " & Chr(13) & Chr(10)
-                    txtbxmpv.Text &= smsg.header & Chr(13) & Chr(10)
-                    txtbxmpv.Text &= "Message: " & Chr(13) & Chr(10)
-                    txtbxmpv.Text &= smsg.data & Chr(13) & Chr(10)
-                Else
-                    txtbxmpv.Text &= "Sender: " & smsg.senderaddr & ":" & smsg.senderport & Chr(13) & Chr(10)
-                    txtbxmpv.Text &= "Header: " & Chr(13) & Chr(10)
-                    txtbxmpv.Text &= smsg.header & Chr(13) & Chr(10)
-                    txtbxmpv.Text &= "Message: " & Chr(13) & Chr(10)
-                    txtbxmpv.Text &= smsg.data & Chr(13) & Chr(10)
-                End If
+                Try
+                    Dim smsg As Mail = lstmsg(lstvmm.SelectedIndices(0))
+                    If smsg.wassent Then
+                        txtbxmpv.Text &= "Reciver: " & smsg.recaddr & ":" & smsg.recport & Chr(13) & Chr(10)
+                        txtbxmpv.Text &= "Header: " & Chr(13) & Chr(10)
+                        txtbxmpv.Text &= smsg.header & Chr(13) & Chr(10)
+                        txtbxmpv.Text &= "Message: " & Chr(13) & Chr(10)
+                        txtbxmpv.Text &= smsg.data & Chr(13) & Chr(10)
+                    Else
+                        txtbxmpv.Text &= "Sender: " & smsg.senderaddr & ":" & smsg.senderport & Chr(13) & Chr(10)
+                        txtbxmpv.Text &= "Header: " & Chr(13) & Chr(10)
+                        txtbxmpv.Text &= smsg.header & Chr(13) & Chr(10)
+                        txtbxmpv.Text &= "Message: " & Chr(13) & Chr(10)
+                        txtbxmpv.Text &= smsg.data & Chr(13) & Chr(10)
+                    End If
+                Catch ex As ArgumentOutOfRangeException
+                    drfrsh = True
+                End Try
             ElseIf lstvmm.SelectedIndices.Count > 0 Then
                 Dim smc As Integer = 0
                 Dim rmc As Integer = 0
                 For Each i As Integer In lstvmm.SelectedIndices
-                    Dim smsg As Mail = lstmsg(i)
-                    If smsg.wassent Then
-                        smc += 1
-                    Else
-                        rmc += 1
-                    End If
+                    Try
+                        Dim smsg As Mail = lstmsg(i)
+                        If smsg.wassent Then
+                            smc += 1
+                        Else
+                            rmc += 1
+                        End If
+                    Catch ex As ArgumentOutOfRangeException
+                        drfrsh = True
+                    End Try
                 Next
                 txtbxmpv.Text &= "Selected: " & Chr(13) & Chr(10)
-                If smc > 0 Then txtbxmpv.Text &= smc & " sent messages."
-                If rmc > 0 Then txtbxmpv.Text &= rmc & " received messages."
+                If smc > 0 Then txtbxmpv.Text &= smc & " sent messages." & Chr(13) & Chr(10)
+                If rmc > 0 Then txtbxmpv.Text &= rmc & " received messages." & Chr(13) & Chr(10)
             End If
         End SyncLock
     End Sub
