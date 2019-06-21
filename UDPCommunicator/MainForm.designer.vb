@@ -79,6 +79,7 @@ Partial Class MainForm
         Me.progb1 = New System.Windows.Forms.ProgressBar()
         Me.dudla = New System.Windows.Forms.DomainUpDown()
         Me.txtbxlp = New System.Windows.Forms.TextBox()
+        Me.butabout = New System.Windows.Forms.Button()
         Me.tableLayoutPanel1.SuspendLayout()
         CType(Me.splitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splitContainer1.Panel1.SuspendLayout()
@@ -103,11 +104,13 @@ Partial Class MainForm
         '
         'tableLayoutPanel1
         '
-        Me.tableLayoutPanel1.ColumnCount = 1
-        Me.tableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.tableLayoutPanel1.ColumnCount = 2
+        Me.tableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.0!))
+        Me.tableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
         Me.tableLayoutPanel1.Controls.Add(Me.Label2, 0, 0)
         Me.tableLayoutPanel1.Controls.Add(Me.splitContainer1, 0, 1)
         Me.tableLayoutPanel1.Controls.Add(Me.groupBox4, 0, 2)
+        Me.tableLayoutPanel1.Controls.Add(Me.butabout, 1, 0)
         Me.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.tableLayoutPanel1.Margin = New System.Windows.Forms.Padding(5)
@@ -116,6 +119,7 @@ Partial Class MainForm
         Me.tableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
         Me.tableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70.0!))
         Me.tableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.tableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.tableLayoutPanel1.Size = New System.Drawing.Size(584, 361)
         Me.tableLayoutPanel1.TabIndex = 0
         '
@@ -126,13 +130,14 @@ Partial Class MainForm
         Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label2.Location = New System.Drawing.Point(3, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(578, 36)
+        Me.Label2.Size = New System.Drawing.Size(490, 36)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "UDP Communicator:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'splitContainer1
         '
+        Me.tableLayoutPanel1.SetColumnSpan(Me.splitContainer1, 2)
         Me.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.splitContainer1.Location = New System.Drawing.Point(0, 36)
         Me.splitContainer1.Margin = New System.Windows.Forms.Padding(0)
@@ -315,7 +320,7 @@ Partial Class MainForm
         Me.splitContainer2.Panel2Collapsed = True
         Me.splitContainer2.Panel2MinSize = 150
         Me.splitContainer2.Size = New System.Drawing.Size(584, 124)
-        Me.splitContainer2.SplitterDistance = 300
+        Me.splitContainer2.SplitterDistance = 150
         Me.splitContainer2.TabIndex = 0
         '
         'groupBox2
@@ -451,7 +456,7 @@ Partial Class MainForm
         Me.groupBox3.Location = New System.Drawing.Point(0, 0)
         Me.groupBox3.Margin = New System.Windows.Forms.Padding(0)
         Me.groupBox3.Name = "groupBox3"
-        Me.groupBox3.Size = New System.Drawing.Size(280, 124)
+        Me.groupBox3.Size = New System.Drawing.Size(96, 100)
         Me.groupBox3.TabIndex = 0
         Me.groupBox3.TabStop = False
         Me.groupBox3.Text = "Message Previewer"
@@ -469,7 +474,7 @@ Partial Class MainForm
         Me.tableLayoutPanel6.RowCount = 2
         Me.tableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
         Me.tableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.tableLayoutPanel6.Size = New System.Drawing.Size(274, 105)
+        Me.tableLayoutPanel6.Size = New System.Drawing.Size(90, 81)
         Me.tableLayoutPanel6.TabIndex = 0
         '
         'tableLayoutPanel7
@@ -484,22 +489,22 @@ Partial Class MainForm
         Me.tableLayoutPanel7.Controls.Add(Me.butmpv, 0, 0)
         Me.tableLayoutPanel7.Controls.Add(Me.butmpech, 0, 0)
         Me.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tableLayoutPanel7.Location = New System.Drawing.Point(0, 84)
+        Me.tableLayoutPanel7.Location = New System.Drawing.Point(0, 64)
         Me.tableLayoutPanel7.Margin = New System.Windows.Forms.Padding(0)
         Me.tableLayoutPanel7.Name = "tableLayoutPanel7"
         Me.tableLayoutPanel7.RowCount = 1
         Me.tableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.tableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 17.0!))
-        Me.tableLayoutPanel7.Size = New System.Drawing.Size(274, 21)
+        Me.tableLayoutPanel7.Size = New System.Drawing.Size(90, 17)
         Me.tableLayoutPanel7.TabIndex = 3
         '
         'butmpdel
         '
         Me.butmpdel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.butmpdel.Location = New System.Drawing.Point(136, 0)
+        Me.butmpdel.Location = New System.Drawing.Point(44, 0)
         Me.butmpdel.Margin = New System.Windows.Forms.Padding(0)
         Me.butmpdel.Name = "butmpdel"
-        Me.butmpdel.Size = New System.Drawing.Size(68, 21)
+        Me.butmpdel.Size = New System.Drawing.Size(22, 17)
         Me.butmpdel.TabIndex = 2
         Me.butmpdel.Text = "Delete"
         Me.butmpdel.UseVisualStyleBackColor = True
@@ -507,10 +512,10 @@ Partial Class MainForm
         'butmpclo
         '
         Me.butmpclo.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.butmpclo.Location = New System.Drawing.Point(204, 0)
+        Me.butmpclo.Location = New System.Drawing.Point(66, 0)
         Me.butmpclo.Margin = New System.Windows.Forms.Padding(0)
         Me.butmpclo.Name = "butmpclo"
-        Me.butmpclo.Size = New System.Drawing.Size(70, 21)
+        Me.butmpclo.Size = New System.Drawing.Size(24, 17)
         Me.butmpclo.TabIndex = 3
         Me.butmpclo.Text = "Close"
         Me.butmpclo.UseVisualStyleBackColor = True
@@ -521,7 +526,7 @@ Partial Class MainForm
         Me.butmpv.Location = New System.Drawing.Point(0, 0)
         Me.butmpv.Margin = New System.Windows.Forms.Padding(0)
         Me.butmpv.Name = "butmpv"
-        Me.butmpv.Size = New System.Drawing.Size(68, 21)
+        Me.butmpv.Size = New System.Drawing.Size(22, 17)
         Me.butmpv.TabIndex = 0
         Me.butmpv.Text = "View"
         Me.butmpv.UseVisualStyleBackColor = True
@@ -529,10 +534,10 @@ Partial Class MainForm
         'butmpech
         '
         Me.butmpech.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.butmpech.Location = New System.Drawing.Point(68, 0)
+        Me.butmpech.Location = New System.Drawing.Point(22, 0)
         Me.butmpech.Margin = New System.Windows.Forms.Padding(0)
         Me.butmpech.Name = "butmpech"
-        Me.butmpech.Size = New System.Drawing.Size(68, 21)
+        Me.butmpech.Size = New System.Drawing.Size(22, 17)
         Me.butmpech.TabIndex = 1
         Me.butmpech.Text = "Echo"
         Me.butmpech.UseVisualStyleBackColor = True
@@ -546,12 +551,13 @@ Partial Class MainForm
         Me.txtbxmpv.Name = "txtbxmpv"
         Me.txtbxmpv.ReadOnly = True
         Me.txtbxmpv.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtbxmpv.Size = New System.Drawing.Size(268, 78)
+        Me.txtbxmpv.Size = New System.Drawing.Size(84, 58)
         Me.txtbxmpv.TabIndex = 4
         Me.txtbxmpv.WordWrap = False
         '
         'groupBox4
         '
+        Me.tableLayoutPanel1.SetColumnSpan(Me.groupBox4, 2)
         Me.groupBox4.Controls.Add(Me.tableLayoutPanel2)
         Me.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.groupBox4.Location = New System.Drawing.Point(0, 288)
@@ -646,6 +652,17 @@ Partial Class MainForm
         Me.txtbxlp.Size = New System.Drawing.Size(190, 20)
         Me.txtbxlp.TabIndex = 1
         '
+        'butabout
+        '
+        Me.butabout.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.butabout.Location = New System.Drawing.Point(496, 0)
+        Me.butabout.Margin = New System.Windows.Forms.Padding(0)
+        Me.butabout.Name = "butabout"
+        Me.butabout.Size = New System.Drawing.Size(88, 36)
+        Me.butabout.TabIndex = 6
+        Me.butabout.Text = "About"
+        Me.butabout.UseVisualStyleBackColor = True
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -726,4 +743,5 @@ Partial Class MainForm
     Friend WithEvents ColumnHeader8 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader9 As System.Windows.Forms.ColumnHeader
     Private WithEvents butcmci As System.Windows.Forms.Button
+    Friend WithEvents butabout As System.Windows.Forms.Button
 End Class

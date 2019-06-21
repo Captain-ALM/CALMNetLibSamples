@@ -18,4 +18,7 @@ Public Module [Global]
     Public prip As String
     Public prport As Integer
     Public addrfam As AddressFamily = AddressFamily.Unspecified
+    Public description As String
+    Public license As String
+    Public execdir As String = IO.Path.GetDirectoryName(Reflection.Assembly.GetEntryAssembly.Location)
 End Module

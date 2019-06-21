@@ -260,4 +260,32 @@ Partial Public Class MainForm
             frm = Nothing
         End If
     End Sub
+
+    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Try
+            If IO.File.Exists(execdir & "\description.txt") Then
+                description = IO.File.ReadAllText(execdir & "\description.txt")
+            Else
+                description = ""
+            End If
+        Catch ex As IO.IOException
+            description = ""
+        End Try
+        Try
+            If IO.File.Exists(execdir & "\license.txt") Then
+                license = IO.File.ReadAllText(execdir & "\license.txt")
+            Else
+                license = ""
+            End If
+        Catch ex As IO.IOException
+            license = ""
+        End Try
+    End Sub
+
+    Private Sub butabout_Click(sender As Object, e As EventArgs) Handles butabout.Click
+        Dim frm As New AboutBx()
+        frm.ShowDialog(Me)
+        If Not frm.Disposing And Not frm.IsDisposed Then frm.Dispose()
+        frm = Nothing
+    End Sub
 End Class
