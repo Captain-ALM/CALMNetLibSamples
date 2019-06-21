@@ -44,7 +44,7 @@ Partial Public Class MainForm
 
     Private Sub msgRec(msg As captainalm.CALMNetLibSamples.extlib.Message)
         Dim cr As Reg = New Reg(msg.senderIP, msg.senderPort)
-        Dim e As Boolean = lstreg.ContainsKey(cr.name)
+        Dim e As Boolean = exists(cr)
         If Not e Then
             lstreg.Add(cr.name, cr)
         End If
@@ -59,7 +59,17 @@ Partial Public Class MainForm
             If cmarshal.ready Then cmarshal.close()
             cmarshal = Nothing
         End If
-        If t_rf IsNot Nothing Then If t_rf.IsAlive Then t_rf.Abort()
+        If t_rf IsNot Nothing Then
+            If t_rf.IsAlive Then
+                t_rf.Abort()
+            End If
+            t_rf = Nothing
+        End If
+        If t_rf Is Nothing Then
+            t_rf = New Thread(AddressOf rf)
+            t_rf.IsBackground = True
+            t_rf.Start()
+        End If
         drfrsh = True
         configure()
     End Sub
@@ -89,9 +99,9 @@ Partial Public Class MainForm
     End Sub
 
     Sub Butcmadd_Click(sender As Object, e As EventArgs) Handles butcmadd.Click
-        Dim frm As New addclient()
+        Dim frm As New avclient()
         If frm.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
-            If Not lstreg.ContainsKey(frm.reg.name) Then lstreg.Add(frm.reg.name, frm.reg)
+            If Not lstreg.ContainsKey(frm.reg.name) And Not exists(frm.reg) Then lstreg.Add(frm.reg.name, frm.reg)
             drfrsh = True
         End If
         If Not frm.Disposing And Not frm.IsDisposed Then frm.Dispose()

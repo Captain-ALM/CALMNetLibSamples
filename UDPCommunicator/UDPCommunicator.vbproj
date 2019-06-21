@@ -70,10 +70,10 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="addclient.designer.vb">
-      <DependentUpon>addclient.vb</DependentUpon>
+    <Compile Include="avclient.designer.vb">
+      <DependentUpon>avclient.vb</DependentUpon>
     </Compile>
-    <Compile Include="addclient.vb">
+    <Compile Include="avclient.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="addrec.designer.vb">
@@ -123,8 +123,8 @@
     <Compile Include="Reg.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="addclient.resx">
-      <DependentUpon>addclient.vb</DependentUpon>
+    <EmbeddedResource Include="avclient.resx">
+      <DependentUpon>avclient.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="addrec.resx">
       <DependentUpon>addrec.vb</DependentUpon>

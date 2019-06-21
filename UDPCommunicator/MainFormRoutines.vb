@@ -50,6 +50,7 @@ Partial Public Class MainForm
             End If
             lport = frm.port
             cmarshal = New extlib.NetMarshalUDP(frm.selected_interface, frm.port)
+            addrfam = frm.selected_interface.AddressFamily
             drfrsh = True
         End If
         If Not frm.Disposing And Not frm.IsDisposed Then frm.Dispose()
@@ -102,21 +103,24 @@ Partial Public Class MainForm
         dudla.Items.Clear()
         dudla.Items.AddRange(lip)
         If si < dudla.Items.Count And si >= -1 Then dudla.SelectedIndex = si
+        If si = -1 And dudla.Items.Count > 0 Then dudla.SelectedIndex = 0
         txtbxlp.Text = CStr(lport)
     End Sub
-
+    Dim slockregen As New Object()
     Private Sub uplstvcm()
         Dim si As List(Of Integer) = getsi(lstvcm.SelectedIndices)
         lstvcm.SelectedIndices.Clear()
         lstvcm.Items.Clear()
-        For Each c As Reg In lstreg.Values
-            Dim lvi As New ListViewItem(c.name)
-            lvi.SubItems.Add(c.ip.ToString())
-            lvi.SubItems.Add(c.port)
-            lvi.SubItems.Add(c.pip)
-            lvi.SubItems.Add(c.port)
-            lstvcm.Items.Add(lvi)
-        Next
+        SyncLock slockregen
+            For Each c As Reg In lstreg.Values
+                Dim lvi As New ListViewItem(c.name)
+                lvi.SubItems.Add(c.ip.ToString())
+                lvi.SubItems.Add(c.port)
+                lvi.SubItems.Add(c.pip)
+                lvi.SubItems.Add(c.port)
+                lstvcm.Items.Add(lvi)
+            Next
+        End SyncLock
         For Each i As Integer In si
             If i < lstvcm.Items.Count And i >= 0 Then lstvcm.SelectedIndices.Add(i)
         Next
@@ -160,6 +164,23 @@ Partial Public Class MainForm
             Next
         End SyncLock
         Return toret
+    End Function
+    Private Function exists(r As Reg) As Boolean
+        SyncLock slockregen
+            For Each c As Reg In lstreg.Values
+                If r.ip = c.ip And r.port = c.port Then Return True
+            Next
+        End SyncLock
+        Return False
+    End Function
+    Private Function getname(r As Reg) As String
+        SyncLock slockregen
+            For Each c As String In lstreg.Keys
+                Dim c2 As Reg = lstreg(c)
+                If r.ip = c2.ip And r.port = c2.port Then Return c
+            Next
+        End SyncLock
+        Return False
     End Function
     Private Sub rf()
         While True

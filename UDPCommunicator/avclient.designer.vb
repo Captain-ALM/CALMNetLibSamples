@@ -6,33 +6,33 @@
 ' 
 ' To change this template use Tools | Options | Coding | Edit Standard Headers.
 '
-Partial Class addclient
-	Inherits System.Windows.Forms.Form
-	
-	''' <summary>
-	''' Designer variable used to keep track of non-visual components.
-	''' </summary>
-	Private components As System.ComponentModel.IContainer
-	
-	''' <summary>
-	''' Disposes resources used by the form.
-	''' </summary>
-	''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-	Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-		If disposing Then
-			If components IsNot Nothing Then
-				components.Dispose()
-			End If
-		End If
-		MyBase.Dispose(disposing)
-	End Sub
-	
-	''' <summary>
-	''' This method is required for Windows Forms designer support.
-	''' Do not change the method contents inside the source code editor. The Forms designer might
-	''' not be able to load this method if it was changed manually.
-	''' </summary>
-	Private Sub InitializeComponent()
+Partial Class avclient
+    Inherits System.Windows.Forms.Form
+
+    ''' <summary>
+    ''' Designer variable used to keep track of non-visual components.
+    ''' </summary>
+    Private components As System.ComponentModel.IContainer
+
+    ''' <summary>
+    ''' Disposes resources used by the form.
+    ''' </summary>
+    ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        If disposing Then
+            If components IsNot Nothing Then
+                components.Dispose()
+            End If
+        End If
+        MyBase.Dispose(disposing)
+    End Sub
+
+    ''' <summary>
+    ''' This method is required for Windows Forms designer support.
+    ''' Do not change the method contents inside the source code editor. The Forms designer might
+    ''' not be able to load this method if it was changed manually.
+    ''' </summary>
+    Private Sub InitializeComponent()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.OK_Button = New System.Windows.Forms.Button()
         Me.Cancel_Button = New System.Windows.Forms.Button()
@@ -121,9 +121,9 @@ Partial Class addclient
         Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label2.Location = New System.Drawing.Point(12, 9)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(97, 20)
+        Me.Label2.Size = New System.Drawing.Size(140, 20)
         Me.Label2.TabIndex = 12
-        Me.Label2.Text = "Add Client:"
+        Me.Label2.Text = "Add/View Client:"
         '
         'txtbxipaddress
         '
@@ -183,7 +183,7 @@ Partial Class addclient
         Me.Label6.TabIndex = 18
         Me.Label6.Text = "Name:"
         '
-        'addclient
+        'avclient
         '
         Me.AcceptButton = Me.OK_Button
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -207,10 +207,10 @@ Partial Class addclient
         Me.MaximumSize = New System.Drawing.Size(400, 225)
         Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(400, 225)
-        Me.Name = "addclient"
+        Me.Name = "avclient"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Add UDP Client"
+        Me.Text = "Add/View UDP Client"
         Me.TableLayoutPanel1.ResumeLayout(False)
         CType(Me.nudport, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudrport, System.ComponentModel.ISupportInitialize).EndInit()
@@ -218,13 +218,13 @@ Partial Class addclient
         Me.PerformLayout()
 
     End Sub
-	Private withevents txtbxipaddress As System.Windows.Forms.TextBox
-	Private withevents Label2 As System.Windows.Forms.Label
-	Private withevents label1 As System.Windows.Forms.Label
-	Private withevents Label3 As System.Windows.Forms.Label
-	Private withevents nudport As System.Windows.Forms.NumericUpDown
-	Private withevents Cancel_Button As System.Windows.Forms.Button
-	Private withevents OK_Button As System.Windows.Forms.Button
+    Private WithEvents txtbxipaddress As System.Windows.Forms.TextBox
+    Private WithEvents Label2 As System.Windows.Forms.Label
+    Private WithEvents label1 As System.Windows.Forms.Label
+    Private WithEvents Label3 As System.Windows.Forms.Label
+    Private WithEvents nudport As System.Windows.Forms.NumericUpDown
+    Private WithEvents Cancel_Button As System.Windows.Forms.Button
+    Private WithEvents OK_Button As System.Windows.Forms.Button
     Private WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Private WithEvents txtbxripaddress As System.Windows.Forms.TextBox
     Private WithEvents Label4 As System.Windows.Forms.Label

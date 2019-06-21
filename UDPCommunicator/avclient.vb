@@ -8,8 +8,9 @@ Imports System.Net.Sockets
 ' 
 ' To change this template use Tools | Options | Coding | Edit Standard Headers.
 '
-Partial Public Class addclient
+Partial Public Class avclient
     Public reg As Reg
+    Friend mode As avmode = avmode.None
 
     Public Sub New()
         ' The Me.InitializeComponent call is required for Windows Forms designer support.
@@ -20,7 +21,22 @@ Partial Public Class addclient
         '
     End Sub
 
+    Friend Sub New(m As avmode)
+        Me.InitializeComponent()
+        mode = m
+    End Sub
+    Friend Sub New(m As avmode, r As Reg)
+        Me.InitializeComponent()
+        mode = m
+        reg = r
+    End Sub
+
     Sub OK_Button_Click(sender As Object, e As EventArgs) Handles OK_Button.Click
+        If mode = avmode.View Then
+            Me.DialogResult = System.Windows.Forms.DialogResult.OK
+            Me.Close()
+            Return
+        End If
         OK_Button.Enabled = False
         Cancel_Button.Enabled = False
         txtbxipaddress.Enabled = False
@@ -87,7 +103,11 @@ Partial Public Class addclient
             Me.Close()
         Else
             If cip Then
-                txtbxipaddress.Text = "255.255.255.255"
+                If addrfam = AddressFamily.InterNetwork Then
+                    txtbxipaddress.Text = "255.255.255.255"
+                ElseIf addrfam = AddressFamily.InterNetworkV6 Then
+                    txtbxipaddress.Text = IPAddress.IPv6None.ToString()
+                End If
             End If
             If cip2 Then
                 txtbxripaddress.Text = prip.ToString()
@@ -113,15 +133,50 @@ Partial Public Class addclient
         nudport.Enabled = False
         txtbxripaddress.Enabled = False
         nudrport.Enabled = False
-        txtbxipaddress.Text = "255.255.255.255"
-        nudport.Value = 5432
-        txtbxripaddress.Text = prip
-        nudrport.Value = prport
-        txtbxipaddress.Enabled = True
-        nudport.Enabled = True
-        txtbxripaddress.Enabled = True
-        nudrport.Enabled = True
-        OK_Button.Enabled = True
-        Cancel_Button.Enabled = True
+        If mode = avmode.New Then
+            Me.Text = "Add UDP Client"
+            Label2.Text = "Add Client:"
+            If addrfam = AddressFamily.InterNetwork Then
+                txtbxipaddress.Text = "255.255.255.255"
+            ElseIf addrfam = AddressFamily.InterNetworkV6 Then
+                txtbxipaddress.Text = IPAddress.IPv6None.ToString()
+            End If
+            nudport.Value = 5432
+            txtbxripaddress.Text = prip
+            nudrport.Value = prport
+            txtbxipaddress.Enabled = True
+            nudport.Enabled = True
+            txtbxripaddress.Enabled = True
+            nudrport.Enabled = True
+            OK_Button.Enabled = True
+            Cancel_Button.Enabled = True
+        ElseIf mode = avmode.View Then
+            Me.Text = "View UDP Client"
+            Label2.Text = "View Client:"
+            txtbxipaddress.Text = reg.ip
+            txtbxripaddress.Text = reg.pip
+            nudport.Value = reg.port
+            nudrport.Value = reg.pport
+            txtbxipaddress.Enabled = True
+            txtbxipaddress.ReadOnly = True
+            nudport.Enabled = True
+            nudport.ReadOnly = True
+            txtbxripaddress.Enabled = True
+            txtbxripaddress.ReadOnly = True
+            nudrport.Enabled = True
+            nudport.Increment = 0
+            nudport.Controls(0).Enabled = False
+            nudrport.ReadOnly = True
+            nudrport.Increment = 0
+            nudrport.Controls(0).Enabled = False
+            OK_Button.Enabled = True
+            Cancel_Button.Enabled = True
+        End If
     End Sub
 End Class
+
+Friend Enum avmode As Integer
+    None = 0
+    View = 1
+    [New] = 2
+End Enum
