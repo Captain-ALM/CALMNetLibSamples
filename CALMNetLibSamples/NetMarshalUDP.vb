@@ -45,7 +45,7 @@ Public Class NetMarshalUDP
     Protected Overrides Sub t_exec()
         While _cl IsNot Nothing
             Try
-                While _cl.listening
+                While _cl IsNot Nothing AndAlso _cl.listening
                     Dim bts As Byte() = Nothing
                     If _f = AddressFamily.InterNetwork Then
                         bts = CType(_cl, INetSocketConnectionless).recieveBytesFrom(IPAddress.Any.ToString, 0)

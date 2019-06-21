@@ -226,7 +226,7 @@ Public Class NetMarshalTCP
     Protected Overrides Sub t_exec()
         While _cl IsNot Nothing
             Try
-                While _cl.listening
+                While _cl IsNot Nothing AndAlso _cl.listening
                     SyncLock _slockconnect
                         If _cl.clientWaiting Then
                             Dim acl As INetSocket = _cl.acceptClient()
@@ -284,7 +284,7 @@ Public Class NetMarshalTCP
 
     Protected Overridable Sub t_cl_exec(obj As Object)
         Dim tpl As Tuple(Of NetTCPClient, NetTCPClient, Thread) = CType(obj, Tuple(Of NetTCPClient, NetTCPClient, Thread))
-        While _cl IsNot Nothing And tpl.Item1.connected And tpl.Item2.connected
+        While _cl IsNot Nothing AndAlso tpl.Item1.connected AndAlso tpl.Item2.connected
             Try
                 While tpl.Item1.connected
                     Dim bts As Byte() = tpl.Item1.recieveBytes()
