@@ -134,7 +134,7 @@ Partial Public Class avclient
         txtbxripaddress.Enabled = False
         nudrport.Enabled = False
         If mode = avmode.New Then
-            Me.Text = "Add UDP Client"
+            Me.Text = "Add TCP Client"
             Label2.Text = "Add Client:"
             If addrfam = AddressFamily.InterNetwork Then
                 txtbxipaddress.Text = IPAddress.None.ToString()
@@ -151,7 +151,7 @@ Partial Public Class avclient
             OK_Button.Enabled = True
             Cancel_Button.Enabled = True
         ElseIf mode = avmode.View Then
-            Me.Text = "View UDP Client"
+            Me.Text = "View TCP Client"
             Label2.Text = "View Client:"
             txtbxnom.Text = reg.name
             txtbxnom.ReadOnly = True
