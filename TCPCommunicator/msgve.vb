@@ -47,13 +47,13 @@ Public Partial Class msgve
     End Sub
 
     Sub Txtbxheader_TextChanged(sender As Object, e As EventArgs) Handles txtbxheader.TextChanged
-        lblhl.Text = padnum(txtbxheader.Text.Length, 4) & " / 1024"
-        If txtbxheader.Text.Length > 1024 Then txtbxheader.Text = txtbxheader.Text.Substring(0, 1024)
+        lblhl.Text = padnum(txtbxheader.Text.Length, 7) & " / 1048576"
+        If txtbxheader.Text.Length > 1048576 Then txtbxheader.Text = txtbxheader.Text.Substring(0, 1048576)
     End Sub
 
     Sub Txtbxdat_TextChanged(sender As Object, e As EventArgs) Handles txtbxdat.TextChanged
-        lbldl.Text = padnum(txtbxdat.Text.Length, 5) & " / 16384"
-        If txtbxdat.Text.Length > 16384 Then txtbxdat.Text = txtbxdat.Text.Substring(0, 16384)
+        lbldl.Text = padnum(txtbxdat.Text.Length, 8) & " / 16777216"
+        If txtbxdat.Text.Length > 16777216 Then txtbxdat.Text = txtbxdat.Text.Substring(0, 16777216)
     End Sub
 
     Private Function padnum(num As Integer, len As Integer) As String

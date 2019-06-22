@@ -99,7 +99,7 @@ Partial Class msgve
         '
         Me.txtbxheader.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbxheader.Location = New System.Drawing.Point(63, 83)
-        Me.txtbxheader.MaxLength = 1024
+        Me.txtbxheader.MaxLength = 1048576
         Me.txtbxheader.Name = "txtbxheader"
         Me.txtbxheader.Size = New System.Drawing.Size(324, 20)
         Me.txtbxheader.TabIndex = 1
@@ -116,28 +116,28 @@ Partial Class msgve
         'lblhl
         '
         Me.lblhl.AutoSize = True
-        Me.lblhl.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblhl.Font = New System.Drawing.Font("Consolas", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblhl.Location = New System.Drawing.Point(399, 85)
         Me.lblhl.Name = "lblhl"
-        Me.lblhl.Size = New System.Drawing.Size(73, 13)
+        Me.lblhl.Size = New System.Drawing.Size(73, 9)
         Me.lblhl.TabIndex = 16
-        Me.lblhl.Text = "   0 / 1024"
+        Me.lblhl.Text = "      0 / 1048576"
         '
         'lbldl
         '
         Me.lbldl.AutoSize = True
-        Me.lbldl.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbldl.Font = New System.Drawing.Font("Consolas", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbldl.Location = New System.Drawing.Point(393, 179)
         Me.lbldl.Name = "lbldl"
-        Me.lbldl.Size = New System.Drawing.Size(85, 13)
+        Me.lbldl.Size = New System.Drawing.Size(81, 9)
         Me.lbldl.TabIndex = 19
-        Me.lbldl.Text = "    0 / 16384"
+        Me.lbldl.Text = "       0 / 16777216"
         '
         'txtbxdat
         '
         Me.txtbxdat.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbxdat.Location = New System.Drawing.Point(63, 123)
-        Me.txtbxdat.MaxLength = 16384
+        Me.txtbxdat.MaxLength = 16777216
         Me.txtbxdat.Multiline = True
         Me.txtbxdat.Name = "txtbxdat"
         Me.txtbxdat.ScrollBars = System.Windows.Forms.ScrollBars.Both

@@ -116,7 +116,7 @@ Partial Class msgve
         'lblhl
         '
         Me.lblhl.AutoSize = True
-        Me.lblhl.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblhl.Font = New System.Drawing.Font("Consolas", 8.25!)
         Me.lblhl.Location = New System.Drawing.Point(399, 85)
         Me.lblhl.Name = "lblhl"
         Me.lblhl.Size = New System.Drawing.Size(73, 13)
@@ -126,7 +126,7 @@ Partial Class msgve
         'lbldl
         '
         Me.lbldl.AutoSize = True
-        Me.lbldl.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbldl.Font = New System.Drawing.Font("Consolas", 8.25!)
         Me.lbldl.Location = New System.Drawing.Point(393, 179)
         Me.lbldl.Name = "lbldl"
         Me.lbldl.Size = New System.Drawing.Size(85, 13)
