@@ -6,6 +6,7 @@ Public Structure Mail
     Public msg As Message
     Public wassent As Boolean
     Public refnum As Integer
+    Public disnom As String
 
     Public Sub New(m As Message)
         msg = m

@@ -95,6 +95,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Global.vb" />
+    <Compile Include="IDCollection.vb" />
     <Compile Include="Mail.vb" />
     <Compile Include="MainForm.designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>

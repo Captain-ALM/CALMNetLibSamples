@@ -32,17 +32,13 @@ Partial Public Class avclient
     End Sub
 
     Sub OK_Button_Click(sender As Object, e As EventArgs) Handles OK_Button.Click
-        If mode = avmode.View Then
-            Me.DialogResult = System.Windows.Forms.DialogResult.OK
-            Me.Close()
-            Return
-        End If
         OK_Button.Enabled = False
         Cancel_Button.Enabled = False
         txtbxipaddress.Enabled = False
         nudport.Enabled = False
         txtbxripaddress.Enabled = False
         nudrport.Enabled = False
+        txtbxnom.Enabled = False
         Dim gok As Boolean = False
         Dim gok2 As Boolean = False
         Dim cip As Boolean = False
@@ -118,6 +114,7 @@ Partial Public Class avclient
             nudport.Enabled = True
             txtbxripaddress.Enabled = True
             nudrport.Enabled = True
+            txtbxnom.Enabled = True
         End If
     End Sub
 
@@ -133,6 +130,7 @@ Partial Public Class avclient
         nudport.Enabled = False
         txtbxripaddress.Enabled = False
         nudrport.Enabled = False
+        txtbxnom.Enabled = False
         If mode = avmode.New Then
             Me.Text = "Add UDP Client"
             Label2.Text = "Add Client:"
@@ -148,13 +146,13 @@ Partial Public Class avclient
             nudport.Enabled = True
             txtbxripaddress.Enabled = True
             nudrport.Enabled = True
+            txtbxnom.Enabled = True
             OK_Button.Enabled = True
             Cancel_Button.Enabled = True
         ElseIf mode = avmode.View Then
             Me.Text = "View UDP Client"
             Label2.Text = "View Client:"
-            txtbxnom.Text = reg.name
-            txtbxnom.ReadOnly = True
+            txtbxnom.Text = reg.id
             txtbxipaddress.Text = reg.ip
             txtbxripaddress.Text = reg.pip
             nudport.Value = reg.port
@@ -171,6 +169,7 @@ Partial Public Class avclient
             nudrport.Increment = 0
             nudrport.Controls(0).Enabled = False
             nudrport.Enabled = True
+            txtbxnom.Enabled = True
             OK_Button.Enabled = True
             Cancel_Button.Enabled = True
         End If

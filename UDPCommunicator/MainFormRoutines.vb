@@ -129,8 +129,9 @@ Partial Public Class MainForm
         lstvcm.SelectedIndices.Clear()
         lstvcm.Items.Clear()
         SyncLock slockregen
-            For Each c As Reg In lstreg.Values
-                Dim lvi As New ListViewItem(c.name)
+            For Each c As Reg In lstreg.getValues()
+                Dim lvi As New ListViewItem(c.ID)
+                lvi.SubItems.Add(c.name)
                 lvi.SubItems.Add(c.ip.ToString())
                 lvi.SubItems.Add(c.port)
                 lvi.SubItems.Add(c.pip)
@@ -152,7 +153,7 @@ Partial Public Class MainForm
             If c.wassent Then
                 lvi = New ListViewItem("<Me>")
             Else
-                lvi = New ListViewItem("<" & c.sndnom & ">")
+                lvi = New ListViewItem("<" & c.disnom & ">")
             End If
             lvi.SubItems.Add(c.recaddr)
             lvi.SubItems.Add(c.recport)
@@ -184,7 +185,7 @@ Partial Public Class MainForm
     End Function
     Private Function exists(r As Reg) As Boolean
         SyncLock slockregen
-            For Each c As Reg In lstreg.Values
+            For Each c As Reg In lstreg.getValues()
                 If r.ip = c.ip And r.port = c.port Then Return True
             Next
         End SyncLock
@@ -192,7 +193,7 @@ Partial Public Class MainForm
     End Function
     Private Function getname(r As Reg) As String
         SyncLock slockregen
-            For Each c As String In lstreg.Keys
+            For Each c As String In lstreg.getIDs()
                 Dim c2 As Reg = lstreg(c)
                 If r.ip = c2.ip And r.port = c2.port Then Return c
             Next

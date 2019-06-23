@@ -14,7 +14,7 @@ Public Partial Class addrec
 		' The Me.InitializeComponent call is required for Windows Forms designer support.
 		Me.InitializeComponent()
         regs = New List(Of Reg)
-        regs.AddRange(lstreg.Values)
+        regs.AddRange(lstreg.getValues())
 		'
 		' TODO : Add constructor code after InitializeComponents
 		'
@@ -27,7 +27,7 @@ Public Partial Class addrec
 		combbxrs.Items.Clear()
 		For i As Integer = 0 To regs.Count - 1 Step 1
             Dim reg As Reg = regs(i)
-			combbxrs.Items.Add(reg.name)
+            combbxrs.Items.Add(reg.name & " <" & reg.ID & ">")
 		Next
 		combbxrs.SelectedIndex = -1
 		combbxrs.Enabled = True

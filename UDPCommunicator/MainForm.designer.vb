@@ -80,6 +80,7 @@ Partial Class MainForm
         Me.dudla = New System.Windows.Forms.DomainUpDown()
         Me.txtbxlp = New System.Windows.Forms.TextBox()
         Me.butabout = New System.Windows.Forms.Button()
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tableLayoutPanel1.SuspendLayout()
         CType(Me.splitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splitContainer1.Panel1.SuspendLayout()
@@ -265,7 +266,7 @@ Partial Class MainForm
         '
         'lstvcm
         '
-        Me.lstvcm.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.columnHeader1, Me.columnHeader2, Me.columnHeader3, Me.ColumnHeader8, Me.ColumnHeader9})
+        Me.lstvcm.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader10, Me.columnHeader1, Me.columnHeader2, Me.columnHeader3, Me.ColumnHeader8, Me.ColumnHeader9})
         Me.lstvcm.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lstvcm.FullRowSelect = True
         Me.lstvcm.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
@@ -433,21 +434,22 @@ Partial Class MainForm
         'columnHeader4
         '
         Me.columnHeader4.Text = "Client Name"
-        Me.columnHeader4.Width = 105
+        Me.columnHeader4.Width = 210
         '
         'columnHeader6
         '
         Me.columnHeader6.Text = "Targeted IP Address"
+        Me.columnHeader6.Width = 120
         '
         'columnHeader7
         '
         Me.columnHeader7.Text = "Targeted Port"
-        Me.columnHeader7.Width = 45
+        Me.columnHeader7.Width = 90
         '
         'columnHeader5
         '
         Me.columnHeader5.Text = "Message Header"
-        Me.columnHeader5.Width = 150
+        Me.columnHeader5.Width = 300
         '
         'groupBox3
         '
@@ -663,6 +665,11 @@ Partial Class MainForm
         Me.butabout.Text = "About"
         Me.butabout.UseVisualStyleBackColor = True
         '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.Text = "Client ID"
+        Me.ColumnHeader10.Width = 0
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -744,4 +751,5 @@ Partial Class MainForm
     Friend WithEvents ColumnHeader9 As System.Windows.Forms.ColumnHeader
     Private WithEvents butcmci As System.Windows.Forms.Button
     Friend WithEvents butabout As System.Windows.Forms.Button
+    Friend WithEvents ColumnHeader10 As System.Windows.Forms.ColumnHeader
 End Class
