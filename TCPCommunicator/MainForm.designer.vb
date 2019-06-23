@@ -80,6 +80,7 @@ Partial Class MainForm
         Me.dudla = New System.Windows.Forms.DomainUpDown()
         Me.txtbxlp = New System.Windows.Forms.TextBox()
         Me.butabout = New System.Windows.Forms.Button()
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tableLayoutPanel1.SuspendLayout()
         CType(Me.splitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splitContainer1.Panel1.SuspendLayout()
@@ -265,7 +266,7 @@ Partial Class MainForm
         '
         'lstvcm
         '
-        Me.lstvcm.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.columnHeader1, Me.columnHeader2, Me.columnHeader3, Me.ColumnHeader8, Me.ColumnHeader9})
+        Me.lstvcm.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader10, Me.columnHeader1, Me.columnHeader2, Me.columnHeader3, Me.ColumnHeader8, Me.ColumnHeader9})
         Me.lstvcm.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lstvcm.FullRowSelect = True
         Me.lstvcm.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
@@ -320,7 +321,7 @@ Partial Class MainForm
         Me.splitContainer2.Panel2Collapsed = True
         Me.splitContainer2.Panel2MinSize = 150
         Me.splitContainer2.Size = New System.Drawing.Size(584, 123)
-        Me.splitContainer2.SplitterDistance = 300
+        Me.splitContainer2.SplitterDistance = 150
         Me.splitContainer2.TabIndex = 0
         '
         'groupBox2
@@ -433,21 +434,22 @@ Partial Class MainForm
         'columnHeader4
         '
         Me.columnHeader4.Text = "Client Name"
-        Me.columnHeader4.Width = 105
+        Me.columnHeader4.Width = 210
         '
         'columnHeader6
         '
         Me.columnHeader6.Text = "Targeted IP Address"
+        Me.columnHeader6.Width = 120
         '
         'columnHeader7
         '
         Me.columnHeader7.Text = "Targeted Port"
-        Me.columnHeader7.Width = 45
+        Me.columnHeader7.Width = 90
         '
         'columnHeader5
         '
         Me.columnHeader5.Text = "Message Header"
-        Me.columnHeader5.Width = 150
+        Me.columnHeader5.Width = 300
         '
         'groupBox3
         '
@@ -456,7 +458,7 @@ Partial Class MainForm
         Me.groupBox3.Location = New System.Drawing.Point(0, 0)
         Me.groupBox3.Margin = New System.Windows.Forms.Padding(0)
         Me.groupBox3.Name = "groupBox3"
-        Me.groupBox3.Size = New System.Drawing.Size(280, 123)
+        Me.groupBox3.Size = New System.Drawing.Size(96, 100)
         Me.groupBox3.TabIndex = 0
         Me.groupBox3.TabStop = False
         Me.groupBox3.Text = "Message Previewer"
@@ -474,7 +476,7 @@ Partial Class MainForm
         Me.tableLayoutPanel6.RowCount = 2
         Me.tableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
         Me.tableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.tableLayoutPanel6.Size = New System.Drawing.Size(274, 104)
+        Me.tableLayoutPanel6.Size = New System.Drawing.Size(90, 81)
         Me.tableLayoutPanel6.TabIndex = 0
         '
         'tableLayoutPanel7
@@ -489,22 +491,22 @@ Partial Class MainForm
         Me.tableLayoutPanel7.Controls.Add(Me.butmpv, 0, 0)
         Me.tableLayoutPanel7.Controls.Add(Me.butmpech, 0, 0)
         Me.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tableLayoutPanel7.Location = New System.Drawing.Point(0, 83)
+        Me.tableLayoutPanel7.Location = New System.Drawing.Point(0, 64)
         Me.tableLayoutPanel7.Margin = New System.Windows.Forms.Padding(0)
         Me.tableLayoutPanel7.Name = "tableLayoutPanel7"
         Me.tableLayoutPanel7.RowCount = 1
         Me.tableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.tableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21.0!))
-        Me.tableLayoutPanel7.Size = New System.Drawing.Size(274, 21)
+        Me.tableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 17.0!))
+        Me.tableLayoutPanel7.Size = New System.Drawing.Size(90, 17)
         Me.tableLayoutPanel7.TabIndex = 3
         '
         'butmpdel
         '
         Me.butmpdel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.butmpdel.Location = New System.Drawing.Point(136, 0)
+        Me.butmpdel.Location = New System.Drawing.Point(44, 0)
         Me.butmpdel.Margin = New System.Windows.Forms.Padding(0)
         Me.butmpdel.Name = "butmpdel"
-        Me.butmpdel.Size = New System.Drawing.Size(68, 21)
+        Me.butmpdel.Size = New System.Drawing.Size(22, 17)
         Me.butmpdel.TabIndex = 2
         Me.butmpdel.Text = "Delete"
         Me.butmpdel.UseVisualStyleBackColor = True
@@ -512,10 +514,10 @@ Partial Class MainForm
         'butmpclo
         '
         Me.butmpclo.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.butmpclo.Location = New System.Drawing.Point(204, 0)
+        Me.butmpclo.Location = New System.Drawing.Point(66, 0)
         Me.butmpclo.Margin = New System.Windows.Forms.Padding(0)
         Me.butmpclo.Name = "butmpclo"
-        Me.butmpclo.Size = New System.Drawing.Size(70, 21)
+        Me.butmpclo.Size = New System.Drawing.Size(24, 17)
         Me.butmpclo.TabIndex = 3
         Me.butmpclo.Text = "Close"
         Me.butmpclo.UseVisualStyleBackColor = True
@@ -526,7 +528,7 @@ Partial Class MainForm
         Me.butmpv.Location = New System.Drawing.Point(0, 0)
         Me.butmpv.Margin = New System.Windows.Forms.Padding(0)
         Me.butmpv.Name = "butmpv"
-        Me.butmpv.Size = New System.Drawing.Size(68, 21)
+        Me.butmpv.Size = New System.Drawing.Size(22, 17)
         Me.butmpv.TabIndex = 0
         Me.butmpv.Text = "View"
         Me.butmpv.UseVisualStyleBackColor = True
@@ -534,10 +536,10 @@ Partial Class MainForm
         'butmpech
         '
         Me.butmpech.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.butmpech.Location = New System.Drawing.Point(68, 0)
+        Me.butmpech.Location = New System.Drawing.Point(22, 0)
         Me.butmpech.Margin = New System.Windows.Forms.Padding(0)
         Me.butmpech.Name = "butmpech"
-        Me.butmpech.Size = New System.Drawing.Size(68, 21)
+        Me.butmpech.Size = New System.Drawing.Size(22, 17)
         Me.butmpech.TabIndex = 1
         Me.butmpech.Text = "Echo"
         Me.butmpech.UseVisualStyleBackColor = True
@@ -551,7 +553,7 @@ Partial Class MainForm
         Me.txtbxmpv.Name = "txtbxmpv"
         Me.txtbxmpv.ReadOnly = True
         Me.txtbxmpv.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtbxmpv.Size = New System.Drawing.Size(268, 77)
+        Me.txtbxmpv.Size = New System.Drawing.Size(84, 58)
         Me.txtbxmpv.TabIndex = 4
         Me.txtbxmpv.WordWrap = False
         '
@@ -663,6 +665,11 @@ Partial Class MainForm
         Me.butabout.Text = "About"
         Me.butabout.UseVisualStyleBackColor = True
         '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.Text = "Client ID"
+        Me.ColumnHeader10.Width = 0
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -744,4 +751,5 @@ Partial Class MainForm
     Friend WithEvents ColumnHeader9 As System.Windows.Forms.ColumnHeader
     Private WithEvents butcmci As System.Windows.Forms.Button
     Friend WithEvents butabout As System.Windows.Forms.Button
+    Friend WithEvents ColumnHeader10 As System.Windows.Forms.ColumnHeader
 End Class

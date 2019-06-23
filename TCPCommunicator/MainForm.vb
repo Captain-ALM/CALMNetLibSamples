@@ -46,11 +46,11 @@ Partial Public Class MainForm
         Dim cr As Reg = New Reg(msg.senderIP, msg.senderPort) With {.pip = prip, .pport = prport}
         Dim e As Boolean = exists(cr)
         If Not e Then
-            lstreg.Add(cr.name, cr)
+            lstreg.Add(cr.id, cr)
         Else
             cr = lstreg(getname(cr))
         End If
-        lstmsg.Add(New Mail(msg) With {.wassent = False, .refnum = 0, .sndnom = cr.name})
+        lstmsg.Add(New Mail(msg) With {.wassent = False, .refnum = 0, .sndnom = cr.ID, .disnom = cr.name})
         drfrsh = True
     End Sub
 
@@ -58,7 +58,7 @@ Partial Public Class MainForm
         Dim cr As Reg = New Reg(ip, port) With {.pip = prip, .pport = prport}
         Dim e As Boolean = exists(cr)
         If Not e Then
-            lstreg.Add(cr.name, cr)
+            lstreg.Add(cr.id, cr)
             drfrsh = True
         End If
     End Sub
@@ -128,8 +128,8 @@ Partial Public Class MainForm
     Sub Butcmadd_Click(sender As Object, e As EventArgs) Handles butcmadd.Click
         Dim frm As New avclient(avmode.New)
         If frm.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
-            If Not lstreg.ContainsKey(frm.reg.name) And Not exists(frm.reg) Then
-                lstreg.Add(frm.reg.name, frm.reg)
+            If Not lstreg.exists(frm.reg.ID) And Not exists(frm.reg) Then
+                lstreg.add(frm.reg.ID, frm.reg)
                 cmarshal.connect(frm.reg.ip, frm.reg.port, frm.reg.pip, frm.reg.pport)
             End If
             drfrsh = True
@@ -238,7 +238,7 @@ Partial Public Class MainForm
                 Dim nmsg As Mail = New Mail(smsg.refnum, smsg.header, smsg.data)
                 nmsg.recaddr = smsg.senderaddr
                 nmsg.recport = smsg.senderport
-                If lstreg.ContainsKey(smsg.sndnom) Then
+                If lstreg.exists(smsg.sndnom) Then
                     nmsg.senderaddr = lstreg(smsg.sndnom).pip
                     nmsg.senderport = lstreg(smsg.sndnom).pport
                 Else
@@ -247,6 +247,7 @@ Partial Public Class MainForm
                 End If
                 nmsg.wassent = True
                 nmsg.sndnom = "Me"
+                nmsg.disnom = "Me"
                 lstmsg.Add(nmsg)
                 cmarshal.sendMessage(nmsg.msg)
             End If
@@ -283,7 +284,10 @@ Partial Public Class MainForm
     Private Sub butcmci_Click(sender As Object, e As EventArgs) Handles butcmci.Click
         If lstvcm.SelectedIndices.Count = 1 Then
             Dim frm As New avclient(avmode.View, lstreg(lstvcm.SelectedItems(0).Text))
-            frm.ShowDialog(Me)
+            If frm.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                lstreg.Item(frm.reg.ID) = frm.reg
+                drfrsh = True
+            End If
             If Not frm.Disposing And Not frm.IsDisposed Then frm.Dispose()
             frm = Nothing
         End If

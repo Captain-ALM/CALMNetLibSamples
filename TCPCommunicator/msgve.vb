@@ -77,8 +77,8 @@ Public Partial Class msgve
     End Sub
 
     Sub Butrecrem_Click(sender As Object, e As EventArgs) Handles butrecrem.Click
-        addrs.RemoveAll(New Predicate(Of reg)(Function(x As reg) As Boolean
-                                                  Return x.name = CStr(dudrap.Items(dudrap.SelectedIndex))
+        addrs.RemoveAll(New Predicate(Of Reg)(Function(x As Reg) As Boolean
+                                                  Return (x.name & " <" & x.ID & ">") = CStr(dudrap.Items(dudrap.SelectedIndex))
                                               End Function))
         rfreshaddrs()
     End Sub
@@ -87,7 +87,7 @@ Public Partial Class msgve
         dudrap.Items.Clear()
         dudrap.Text = ""
         For Each c As reg In addrs
-            dudrap.Items.Add(c.name)
+            dudrap.Items.Add(c.name & " <" & c.ID & ">")
         Next
         If dudrap.Items.Count > 0 Then dudrap.SelectedIndex = 0 Else dudrap.SelectedIndex = -1
     End Sub
@@ -109,7 +109,7 @@ Public Partial Class msgve
             Txtbxheader_TextChanged(Me, New EventArgs())
             txtbxdat.Text = msg.data
             Txtbxdat_TextChanged(Me, New EventArgs())
-            If lstreg.ContainsKey(msg.sndnom) Then
+            If lstreg.exists(msg.sndnom) Then
                 addrs.Add(lstreg(msg.sndnom))
             Else
                 addrs.Add(New Reg(msg.senderaddr, msg.senderport))
@@ -126,7 +126,7 @@ Public Partial Class msgve
             lbldl.Enabled = True
             txtbxheader.Text = msg.header
             txtbxdat.Text = msg.data
-            If lstreg.ContainsKey(msg.sndnom) Then
+            If lstreg.exists(msg.sndnom) Then
                 addrs.Add(lstreg(msg.sndnom))
             Else
                 addrs.Add(New Reg(msg.senderaddr, msg.senderport))

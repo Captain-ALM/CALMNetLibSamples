@@ -11,7 +11,7 @@ Imports System.Net.Sockets
 '
 Public Module [Global]
     Public cmarshal As NetMarshalTCP = Nothing
-    Public lstreg As New Dictionary(Of String, Reg)
+    Public lstreg As New IDCollection(Of Reg)
     Public lstmsg As New List(Of Mail)
     Public lip As New List(Of String)
     Public lport As Integer = 0
