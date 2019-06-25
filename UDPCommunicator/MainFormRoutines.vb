@@ -21,19 +21,25 @@ Partial Public Class MainForm
             Me.Invoke(Sub() rfresh())
         Else
             SyncLock slockrfresh
-                upinfo()
-                uplstvcm()
-                uplstvmm()
-                upprev()
-                If cmarshal Is Nothing Then
-                    lblstatus.Text = ""
-                Else
-                    If cmarshal.ready Then
-                        lblstatus.Text = "Listening."
+                Try
+                    upinfo()
+                    uplstvcm()
+                    uplstvmm()
+                    upprev()
+                    If cmarshal Is Nothing Then
+                        lblstatus.Text = ""
                     Else
-                        lblstatus.Text = "Not Listening."
+                        If cmarshal.ready Then
+                            lblstatus.Text = "Listening."
+                        Else
+                            lblstatus.Text = "Not Listening."
+                        End If
                     End If
-                End If
+                Catch ex As Exception
+                    If Not Me.IsDisposed And Not Me.Disposing And Me.Visible Then
+                        MsgBox("An exception has been raised " & ex.GetType().ToString() & " " & ex.Message & Chr(13) & Chr(10) & ex.StackTrace, MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Exception Raised")
+                    End If
+                End Try
             End SyncLock
         End If
     End Sub
@@ -133,7 +139,7 @@ Partial Public Class MainForm
             For Each c As Reg In lstreg.getValues()
                 Dim lvi As New ListViewItem(c.ID)
                 lvi.SubItems.Add(c.name)
-                lvi.SubItems.Add(c.ip.ToString())
+                lvi.SubItems.Add(c.ip)
                 lvi.SubItems.Add(c.port)
                 lvi.SubItems.Add(c.pip)
                 lvi.SubItems.Add(c.port)

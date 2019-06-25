@@ -106,7 +106,7 @@ Partial Public Class avclient
                 End If
             End If
             If cip2 Then
-                txtbxripaddress.Text = prip.ToString()
+                txtbxripaddress.Text = prip
             End If
             OK_Button.Enabled = True
             Cancel_Button.Enabled = True

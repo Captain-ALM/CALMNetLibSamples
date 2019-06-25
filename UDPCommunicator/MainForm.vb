@@ -39,7 +39,7 @@ Partial Public Class MainForm
 
     Private Sub marshallError(ex As Exception)
         If Not Me.IsDisposed And Not Me.Disposing And Me.Visible Then
-            Me.Invoke(Sub() MsgBox("An exception has been raised " & ex.GetType().ToString() & " " & ex.Message, MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Exception Raised"))
+            Me.Invoke(Sub() MsgBox("An exception has been raised " & ex.GetType().ToString() & " " & ex.Message & Chr(13) & Chr(10) & ex.StackTrace, MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Exception Raised"))
         End If
     End Sub
 

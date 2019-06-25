@@ -128,8 +128,6 @@ Public Partial Class msgve
             txtbxdat.Text = msg.data
             If lstreg.exists(msg.sndnom) Then
                 addrs.Add(lstreg(msg.sndnom))
-            Else
-                addrs.Add(New Reg(msg.senderaddr, msg.senderport))
             End If
         Else
             Me.Text = "Message Creator"
@@ -148,7 +146,7 @@ Public Partial Class msgve
     Public Function genmsgs() As Mail()
         Dim msgs As New List(Of mail)
         For Each c As Reg In addrs
-            msgs.Add(New Mail(0, txtbxheader.Text, txtbxdat.Text, c.pip, c.pport, c.ip.ToString(), c.port) With {.sndnom = "Me"})
+            msgs.Add(New Mail(0, txtbxheader.Text, txtbxdat.Text, c.pip, c.pport, c.ip, c.port) With {.sndnom = "Me"})
         Next
         Return msgs.ToArray()
     End Function
