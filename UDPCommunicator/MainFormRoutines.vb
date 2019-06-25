@@ -15,6 +15,7 @@ Imports System.Windows.Forms
 '
 
 Partial Public Class MainForm
+    Private thrd As Boolean = False
     Private Sub rfresh()
         If Me.InvokeRequired Then
             Me.Invoke(Sub() rfresh())
@@ -90,7 +91,7 @@ Partial Public Class MainForm
                         txtbxmpv.Text &= "Message: " & Chr(13) & Chr(10)
                         txtbxmpv.Text &= smsg.data & Chr(13) & Chr(10)
                     End If
-                Catch ex As ArgumentOutOfRangeException
+                Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                     drfrsh = True
                 End Try
             ElseIf lstvmm.SelectedIndices.Count > 0 Then
@@ -104,7 +105,7 @@ Partial Public Class MainForm
                         Else
                             rmc += 1
                         End If
-                    Catch ex As ArgumentOutOfRangeException
+                    Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                         drfrsh = True
                     End Try
                 Next
@@ -201,7 +202,7 @@ Partial Public Class MainForm
         Return False
     End Function
     Private Sub rf()
-        While True
+        While thrd
             If drfrsh Then
                 drfrsh = False
                 rfresh()

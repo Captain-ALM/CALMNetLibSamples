@@ -54,7 +54,7 @@ Partial Class config
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(184, 29)
-        Me.TableLayoutPanel1.TabIndex = 3
+        Me.TableLayoutPanel1.TabIndex = 5
         '
         'OK_Button
         '
@@ -132,7 +132,7 @@ Partial Class config
         Me.chkbxbf.Location = New System.Drawing.Point(113, 163)
         Me.chkbxbf.Name = "chkbxbf"
         Me.chkbxbf.Size = New System.Drawing.Size(15, 14)
-        Me.chkbxbf.TabIndex = 2
+        Me.chkbxbf.TabIndex = 4
         Me.chkbxbf.UseVisualStyleBackColor = True
         '
         'nudport
@@ -150,7 +150,7 @@ Partial Class config
         Me.txtbxripaddress.Location = New System.Drawing.Point(113, 107)
         Me.txtbxripaddress.Name = "txtbxripaddress"
         Me.txtbxripaddress.Size = New System.Drawing.Size(456, 20)
-        Me.txtbxripaddress.TabIndex = 17
+        Me.txtbxripaddress.TabIndex = 2
         '
         'Label5
         '
@@ -168,7 +168,7 @@ Partial Class config
         Me.nudrport.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.nudrport.Name = "nudrport"
         Me.nudrport.Size = New System.Drawing.Size(456, 20)
-        Me.nudrport.TabIndex = 18
+        Me.nudrport.TabIndex = 3
         Me.nudrport.Value = New Decimal(New Integer() {5432, 0, 0, 0})
         '
         'Label6

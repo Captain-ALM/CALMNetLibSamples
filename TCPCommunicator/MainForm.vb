@@ -32,6 +32,7 @@ Partial Public Class MainForm
         If t_rf Is Nothing Then
             t_rf = New Thread(AddressOf rf)
             t_rf.IsBackground = True
+            thrd = True
             t_rf.Start()
         End If
     End Sub
@@ -84,17 +85,24 @@ Partial Public Class MainForm
         End If
         If t_rf IsNot Nothing Then
             If t_rf.IsAlive Then
-                t_rf.Abort()
+                thrd = False
+                If t_rf.IsAlive Then t_rf.Join(500)
+                If t_rf.IsAlive Then t_rf.Abort()
             End If
             t_rf = Nothing
         End If
+        configure()
+        Dim vals As Reg() = lstreg.getValues()
+        For Each c As Reg In vals
+            If cmarshal IsNot Nothing Then cmarshal.connect(c.ip, c.port, c.pip, c.pport)
+        Next
         If t_rf Is Nothing Then
             t_rf = New Thread(AddressOf rf)
             t_rf.IsBackground = True
+            thrd = True
             t_rf.Start()
         End If
         drfrsh = True
-        configure()
     End Sub
 
     Sub Butscls_Click(sender As Object, e As EventArgs) Handles butscls.Click
@@ -106,7 +114,12 @@ Partial Public Class MainForm
             If cmarshal.ready Then cmarshal.close()
             cmarshal = Nothing
         End If
-        If t_rf IsNot Nothing Then If t_rf.IsAlive Then t_rf.Abort()
+        If t_rf IsNot Nothing Then
+            thrd = False
+            If t_rf.IsAlive Then t_rf.Join(500)
+            If t_rf.IsAlive Then t_rf.Abort()
+            t_rf = Nothing
+        End If
         Me.Close()
     End Sub
 
@@ -119,7 +132,12 @@ Partial Public Class MainForm
             If cmarshal.ready Then cmarshal.close()
             cmarshal = Nothing
         End If
-        If t_rf IsNot Nothing Then If t_rf.IsAlive Then t_rf.Abort()
+        If t_rf IsNot Nothing Then
+            thrd = False
+            If t_rf.IsAlive Then t_rf.Join(500)
+            If t_rf.IsAlive Then t_rf.Abort()
+            t_rf = Nothing
+        End If
     End Sub
 
     Sub MainForm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed

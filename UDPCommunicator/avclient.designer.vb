@@ -65,7 +65,7 @@ Partial Class avclient
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(184, 29)
-        Me.TableLayoutPanel1.TabIndex = 2
+        Me.TableLayoutPanel1.TabIndex = 5
         '
         'OK_Button
         '
@@ -93,7 +93,7 @@ Partial Class avclient
         Me.nudport.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.nudport.Name = "nudport"
         Me.nudport.Size = New System.Drawing.Size(271, 20)
-        Me.nudport.TabIndex = 1
+        Me.nudport.TabIndex = 2
         Me.nudport.Value = New Decimal(New Integer() {5432, 0, 0, 0})
         '
         'Label3
@@ -130,14 +130,14 @@ Partial Class avclient
         Me.txtbxipaddress.Location = New System.Drawing.Point(108, 54)
         Me.txtbxipaddress.Name = "txtbxipaddress"
         Me.txtbxipaddress.Size = New System.Drawing.Size(271, 20)
-        Me.txtbxipaddress.TabIndex = 0
+        Me.txtbxipaddress.TabIndex = 1
         '
         'txtbxripaddress
         '
         Me.txtbxripaddress.Location = New System.Drawing.Point(108, 106)
         Me.txtbxripaddress.Name = "txtbxripaddress"
         Me.txtbxripaddress.Size = New System.Drawing.Size(271, 20)
-        Me.txtbxripaddress.TabIndex = 13
+        Me.txtbxripaddress.TabIndex = 3
         '
         'Label4
         '
@@ -155,7 +155,7 @@ Partial Class avclient
         Me.nudrport.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.nudrport.Name = "nudrport"
         Me.nudrport.Size = New System.Drawing.Size(271, 20)
-        Me.nudrport.TabIndex = 14
+        Me.nudrport.TabIndex = 4
         Me.nudrport.Value = New Decimal(New Integer() {5432, 0, 0, 0})
         '
         'Label5
@@ -172,7 +172,7 @@ Partial Class avclient
         Me.txtbxnom.Location = New System.Drawing.Point(108, 28)
         Me.txtbxnom.Name = "txtbxnom"
         Me.txtbxnom.Size = New System.Drawing.Size(271, 20)
-        Me.txtbxnom.TabIndex = 17
+        Me.txtbxnom.TabIndex = 0
         '
         'Label6
         '

@@ -41,7 +41,7 @@ Public Class NetMarshalTCP
             _cl = Nothing
         End If
         While _clcol.Count > 0
-            For i As Integer = 0 To _clcol.Count - 1 Step 1
+            For i As Integer = _clcol.Count - 1 To 0 Step -1
                 Try
                     Dim ct As Tuple(Of NetTCPClient, NetTCPClient, Thread) = Nothing
                     SyncLock _slockcolman
@@ -56,7 +56,7 @@ Public Class NetMarshalTCP
                     End SyncLock
                     RaiseEvent clientDisconnected(CType(ct.Item2, INetConfig).remoteIPAddress, CType(ct.Item2, INetConfig).remotePort)
                     ct = Nothing
-                Catch ex As IndexOutOfRangeException
+                Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                     raiseExceptionRaised(ex)
                 End Try
             Next
@@ -127,7 +127,7 @@ Public Class NetMarshalTCP
         Get
             Dim toret As Boolean = False
             If _cl IsNot Nothing Then
-                For i As Integer = 0 To _clcol.Count - 1 Step 1
+                For i As Integer = _clcol.Count - 1 To 0 Step -1
                     Try
                         Dim ct As Tuple(Of NetTCPClient, NetTCPClient, Thread) = Nothing
                         SyncLock _slockcolman
@@ -142,7 +142,7 @@ Public Class NetMarshalTCP
                             End If
                             Exit For
                         End If
-                    Catch ex As IndexOutOfRangeException
+                    Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                         raiseExceptionRaised(ex)
                     End Try
                 Next
@@ -153,7 +153,7 @@ Public Class NetMarshalTCP
 
     Public Overridable Sub disconnect(iptdc As String, ptdc As Integer)
         If _cl IsNot Nothing Then
-            For i As Integer = 0 To _clcol.Count - 1 Step 1
+            For i As Integer = _clcol.Count - 1 To 0 Step -1
                 Try
                     Dim ct As Tuple(Of NetTCPClient, NetTCPClient, Thread) = Nothing
                     SyncLock _slockcolman
@@ -169,7 +169,7 @@ Public Class NetMarshalTCP
                         End If
                         Exit For
                     End If
-                Catch ex As IndexOutOfRangeException
+                Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                     raiseExceptionRaised(ex)
                 End Try
             Next
@@ -178,27 +178,24 @@ Public Class NetMarshalTCP
 
     Public Overridable Sub disconnectAll()
         If _cl IsNot Nothing Then
-            While _clcol.Count > 0
-                For i As Integer = 0 To _clcol.Count - 1 Step 1
-                    Try
-                        Dim ct As Tuple(Of NetTCPClient, NetTCPClient, Thread) = Nothing
-                        SyncLock _slockcolman
-                            ct = _clcol(i)
-                        End SyncLock
-                        If ct.Item1 Is Nothing Or ct.Item2 Is Nothing Or ct.Item3 Is Nothing Then Return
-                        If ct.Item1.connected Then
-                            ct.Item1.close()
-                        End If
-                        If ct.Item2.connected Then
-                            ct.Item2.close()
-                        End If
-                        Exit For
-                    Catch ex As IndexOutOfRangeException
-                        raiseExceptionRaised(ex)
-                    End Try
-                Next
+            For i As Integer = _clcol.Count - 1 To 0 Step -1
+                Try
+                    Dim ct As Tuple(Of NetTCPClient, NetTCPClient, Thread) = Nothing
+                    SyncLock _slockcolman
+                        ct = _clcol(i)
+                    End SyncLock
+                    If ct.Item1 Is Nothing Or ct.Item2 Is Nothing Or ct.Item3 Is Nothing Then Return
+                    If ct.Item1.connected Then
+                        ct.Item1.close()
+                    End If
+                    If ct.Item2.connected Then
+                        ct.Item2.close()
+                    End If
+                Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
+                    raiseExceptionRaised(ex)
+                End Try
+            Next
                 Thread.Sleep(200)
-            End While
         End If
     End Sub
 
@@ -212,7 +209,7 @@ Public Class NetMarshalTCP
     Public Overrides Function sendMessage(msg As Message) As Boolean
         If _cl Is Nothing Then Return False
         Dim toret As Boolean = False
-        For i As Integer = 0 To _clcol.Count - 1 Step 1
+        For i As Integer = _clcol.Count - 1 To 0 Step -1
             Try
                 Dim ct As Tuple(Of NetTCPClient, NetTCPClient, Thread) = Nothing
                 SyncLock _slockcolman
@@ -227,7 +224,7 @@ Public Class NetMarshalTCP
                     End If
                     Exit For
                 End If
-            Catch ex As IndexOutOfRangeException
+            Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                 raiseExceptionRaised(ex)
             End Try
         Next
@@ -236,8 +233,8 @@ Public Class NetMarshalTCP
 
     Public Overridable Function broadcast(msg As Message) As Boolean
         If _cl Is Nothing Then Return False
-        Dim toret As Boolean = False
-        For i As Integer = 0 To _clcol.Count - 1 Step 1
+        Dim toret As Boolean = True
+        For i As Integer = _clcol.Count - 1 To 0 Step -1
             Try
                 Dim ct As Tuple(Of NetTCPClient, NetTCPClient, Thread) = Nothing
                 SyncLock _slockcolman
@@ -245,12 +242,12 @@ Public Class NetMarshalTCP
                 End SyncLock
                 If (ct.Item1 IsNot Nothing And ct.Item2 IsNot Nothing And ct.Item3 IsNot Nothing) Then
                     If ct.Item1.connected And ct.Item2.connected And ct.Item3.IsAlive Then
-                        toret = ct.Item2.sendBytes(New Serializer().serializeObject(Of Message)(msg))
+                        toret = toret And ct.Item2.sendBytes(New Serializer().serializeObject(Of Message)(msg))
                     Else
-                        toret = False
+                        toret = toret And False
                     End If
                 End If
-            Catch ex As IndexOutOfRangeException
+            Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                 raiseExceptionRaised(ex)
             End Try
         Next
@@ -300,7 +297,7 @@ Public Class NetMarshalTCP
                             End If
                         End If
                     End SyncLock
-                    For i As Integer = 0 To _clcol.Count - 1 Step 1
+                    For i As Integer = _clcol.Count - 1 To 0 Step -1
                         Try
                             Dim ct As Tuple(Of NetTCPClient, NetTCPClient, Thread) = Nothing
                             SyncLock _slockcolman
@@ -315,7 +312,7 @@ Public Class NetMarshalTCP
                                 RaiseEvent clientDisconnected(CType(ct.Item2, INetConfig).remoteIPAddress, CType(ct.Item2, INetConfig).remotePort)
                             End If
                             ct = Nothing
-                        Catch ex As IndexOutOfRangeException
+                        Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                             raiseExceptionRaised(ex)
                         End Try
                     Next
@@ -358,7 +355,6 @@ Public Class NetMarshalTCP
             Thread.Sleep(200)
         End While
     End Sub
-
 End Class
 
 <Serializable>

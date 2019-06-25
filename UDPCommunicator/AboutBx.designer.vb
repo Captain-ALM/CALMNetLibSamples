@@ -121,7 +121,7 @@ Partial Class AboutBx
         Me.OKButton.Location = New System.Drawing.Point(318, 232)
         Me.OKButton.Name = "OKButton"
         Me.OKButton.Size = New System.Drawing.Size(75, 23)
-        Me.OKButton.TabIndex = 0
+        Me.OKButton.TabIndex = 1
         Me.OKButton.Text = "&OK"
         '
         'TableLayoutPanel1
@@ -138,7 +138,7 @@ Partial Class AboutBx
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 123.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(390, 123)
-        Me.TableLayoutPanel1.TabIndex = 1
+        Me.TableLayoutPanel1.TabIndex = 0
         '
         'TextBox1
         '
@@ -150,7 +150,7 @@ Partial Class AboutBx
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.TextBox1.Size = New System.Drawing.Size(186, 117)
-        Me.TextBox1.TabIndex = 2
+        Me.TextBox1.TabIndex = 1
         Me.TextBox1.TabStop = False
         Me.TextBox1.Text = "License :" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(At runtime, the labels' text will be replaced with the application'" & _
     "s assembly information." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Customize the application's assembly information in the" & _
@@ -166,7 +166,7 @@ Partial Class AboutBx
         Me.TextBoxDescription.ReadOnly = True
         Me.TextBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.TextBoxDescription.Size = New System.Drawing.Size(186, 117)
-        Me.TextBoxDescription.TabIndex = 1
+        Me.TextBoxDescription.TabIndex = 0
         Me.TextBoxDescription.TabStop = False
         Me.TextBoxDescription.Text = resources.GetString("TextBoxDescription.Text")
         '

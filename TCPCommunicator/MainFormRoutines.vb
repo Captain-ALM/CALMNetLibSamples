@@ -15,6 +15,7 @@ Imports System.Windows.Forms
 '
 
 Partial Public Class MainForm
+    Private thrd As Boolean = False
     Private Sub rfresh()
         If Me.InvokeRequired Then
             Me.Invoke(Sub() rfresh())
@@ -92,7 +93,7 @@ Partial Public Class MainForm
                         txtbxmpv.Text &= "Message: " & Chr(13) & Chr(10)
                         txtbxmpv.Text &= smsg.data & Chr(13) & Chr(10)
                     End If
-                Catch ex As ArgumentOutOfRangeException
+                Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                     drfrsh = True
                 End Try
             ElseIf lstvmm.SelectedIndices.Count > 0 Then
@@ -106,7 +107,7 @@ Partial Public Class MainForm
                         Else
                             rmc += 1
                         End If
-                    Catch ex As ArgumentOutOfRangeException
+                    Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                         drfrsh = True
                     End Try
                 Next
@@ -134,7 +135,7 @@ Partial Public Class MainForm
         SyncLock slockregen
             For Each c As Reg In lstreg.getValues()
                 If Not cmarshal.connected(c.ip, c.port) Then
-                    rtr.Add(c.ID)
+                    rtr.Add(c.ID) 'TODO: reconnect clients after a reset
                 Else
                     Dim lvi As New ListViewItem(c.ID)
                     lvi.SubItems.Add(c.name)
@@ -147,7 +148,7 @@ Partial Public Class MainForm
             Next
         End SyncLock
         For Each c As String In rtr
-            lstreg.Remove(c)
+            lstreg.remove(c)
         Next
         For Each i As Integer In si
             If i < lstvcm.Items.Count And i >= 0 Then lstvcm.SelectedIndices.Add(i)
@@ -211,12 +212,12 @@ Partial Public Class MainForm
         Return False
     End Function
     Private Sub rf()
-        While True
+        While thrd
             If drfrsh Then
                 drfrsh = False
                 rfresh()
             Else
-                Thread.Sleep(100)
+                Thread.Sleep(125)
             End If
         End While
     End Sub

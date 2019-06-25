@@ -33,6 +33,7 @@ Partial Class MainForm
 	''' not be able to load this method if it was changed manually.
 	''' </summary>
 	Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.tableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.splitContainer1 = New System.Windows.Forms.SplitContainer()
@@ -45,6 +46,7 @@ Partial Class MainForm
         Me.butcmadd = New System.Windows.Forms.Button()
         Me.butcmrem = New System.Windows.Forms.Button()
         Me.lstvcm = New System.Windows.Forms.ListView()
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.columnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.columnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.columnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -80,7 +82,6 @@ Partial Class MainForm
         Me.dudla = New System.Windows.Forms.DomainUpDown()
         Me.txtbxlp = New System.Windows.Forms.TextBox()
         Me.butabout = New System.Windows.Forms.Button()
-        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tableLayoutPanel1.SuspendLayout()
         CType(Me.splitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splitContainer1.Panel1.SuspendLayout()
@@ -277,6 +278,11 @@ Partial Class MainForm
         Me.lstvcm.TabIndex = 1
         Me.lstvcm.UseCompatibleStateImageBehavior = False
         Me.lstvcm.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.Text = "Client ID"
+        Me.ColumnHeader10.Width = 0
         '
         'columnHeader1
         '
@@ -661,14 +667,9 @@ Partial Class MainForm
         Me.butabout.Margin = New System.Windows.Forms.Padding(0)
         Me.butabout.Name = "butabout"
         Me.butabout.Size = New System.Drawing.Size(88, 36)
-        Me.butabout.TabIndex = 6
+        Me.butabout.TabIndex = 0
         Me.butabout.Text = "About"
         Me.butabout.UseVisualStyleBackColor = True
-        '
-        'ColumnHeader10
-        '
-        Me.ColumnHeader10.Text = "Client ID"
-        Me.ColumnHeader10.Width = 0
         '
         'MainForm
         '
@@ -676,6 +677,7 @@ Partial Class MainForm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(584, 361)
         Me.Controls.Add(Me.tableLayoutPanel1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(300, 200)
         Me.Name = "MainForm"
         Me.Text = "TCP Communicator"

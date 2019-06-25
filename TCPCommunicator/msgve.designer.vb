@@ -63,7 +63,7 @@ Partial Class msgve
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(184, 29)
-        Me.TableLayoutPanel1.TabIndex = 3
+        Me.TableLayoutPanel1.TabIndex = 5
         '
         'OK_Button
         '
@@ -102,7 +102,7 @@ Partial Class msgve
         Me.txtbxheader.MaxLength = 1048576
         Me.txtbxheader.Name = "txtbxheader"
         Me.txtbxheader.Size = New System.Drawing.Size(324, 20)
-        Me.txtbxheader.TabIndex = 1
+        Me.txtbxheader.TabIndex = 3
         '
         'label1
         '
@@ -116,8 +116,8 @@ Partial Class msgve
         'lblhl
         '
         Me.lblhl.AutoSize = True
-        Me.lblhl.Font = New System.Drawing.Font("Consolas", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblhl.Location = New System.Drawing.Point(399, 85)
+        Me.lblhl.Font = New System.Drawing.Font("Consolas", 6.0!)
+        Me.lblhl.Location = New System.Drawing.Point(393, 89)
         Me.lblhl.Name = "lblhl"
         Me.lblhl.Size = New System.Drawing.Size(73, 9)
         Me.lblhl.TabIndex = 16
@@ -142,7 +142,7 @@ Partial Class msgve
         Me.txtbxdat.Name = "txtbxdat"
         Me.txtbxdat.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.txtbxdat.Size = New System.Drawing.Size(324, 136)
-        Me.txtbxdat.TabIndex = 2
+        Me.txtbxdat.TabIndex = 4
         Me.txtbxdat.WordWrap = False
         '
         'label3
@@ -178,7 +178,7 @@ Partial Class msgve
         Me.butrecadd.Location = New System.Drawing.Point(391, 48)
         Me.butrecadd.Name = "butrecadd"
         Me.butrecadd.Size = New System.Drawing.Size(20, 20)
-        Me.butrecadd.TabIndex = 21
+        Me.butrecadd.TabIndex = 1
         Me.butrecadd.Text = "+"
         Me.butrecadd.UseVisualStyleBackColor = True
         '
@@ -187,7 +187,7 @@ Partial Class msgve
         Me.butrecrem.Location = New System.Drawing.Point(417, 48)
         Me.butrecrem.Name = "butrecrem"
         Me.butrecrem.Size = New System.Drawing.Size(20, 20)
-        Me.butrecrem.TabIndex = 22
+        Me.butrecrem.TabIndex = 2
         Me.butrecrem.Text = "-"
         Me.butrecrem.UseVisualStyleBackColor = True
         '
