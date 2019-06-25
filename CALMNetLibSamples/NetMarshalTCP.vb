@@ -206,7 +206,7 @@ Public Class NetMarshalTCP
         End Get
     End Property
 
-    Public Overrides Function sendMessage(msg As Message) As Boolean
+    Public Overrides Function sendMessage(msg As IMessage) As Boolean
         If _cl Is Nothing Then Return False
         Dim toret As Boolean = False
         For i As Integer = _clcol.Count - 1 To 0 Step -1
@@ -218,7 +218,7 @@ Public Class NetMarshalTCP
                 If CType(ct.Item2, INetConfig).remoteIPAddress = msg.receiverIP And CType(ct.Item2, INetConfig).remotePort = msg.receiverPort Then
                     If ct.Item1 Is Nothing Or ct.Item2 Is Nothing Or ct.Item3 Is Nothing Then Return False
                     If ct.Item1.connected And ct.Item2.connected And ct.Item3.IsAlive Then
-                        toret = ct.Item2.sendBytes(New Serializer().serializeObject(Of Message)(msg))
+                        toret = ct.Item2.sendBytes(msg.getData)
                     Else
                         toret = False
                     End If
@@ -231,7 +231,7 @@ Public Class NetMarshalTCP
         Return toret
     End Function
 
-    Public Overridable Function broadcast(msg As Message) As Boolean
+    Public Overridable Function broadcast(msg As IMessage) As Boolean
         If _cl Is Nothing Then Return False
         Dim toret As Boolean = True
         For i As Integer = _clcol.Count - 1 To 0 Step -1
@@ -242,7 +242,7 @@ Public Class NetMarshalTCP
                 End SyncLock
                 If (ct.Item1 IsNot Nothing And ct.Item2 IsNot Nothing And ct.Item3 IsNot Nothing) Then
                     If ct.Item1.connected And ct.Item2.connected And ct.Item3.IsAlive Then
-                        toret = toret And ct.Item2.sendBytes(New Serializer().serializeObject(Of Message)(msg))
+                        toret = toret And ct.Item2.sendBytes(msg.getData)
                     Else
                         toret = toret And False
                     End If
@@ -342,7 +342,7 @@ Public Class NetMarshalTCP
                     If bts.Length > 0 Then
                         Dim tech As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
                         If Not (tech.echo = Chr(6)) Then
-                            Dim tmsg As Message = New Serializer().deSerializeObject(Of Message)(bts)
+                            Dim tmsg As IMessage = New Serializer().deSerializeObject(Of IMessage)(bts)
                             raiseMessageRecieved(tmsg)
                         End If
                     End If

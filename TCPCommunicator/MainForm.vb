@@ -43,11 +43,11 @@ Partial Public Class MainForm
         End If
     End Sub
 
-    Private Sub msgRec(msg As captainalm.CALMNetLibSamples.extlib.Message)
+    Private Sub msgRec(msg As captainalm.CALMNetLibSamples.extlib.IMessage)
         Dim cr As Reg = New Reg(msg.senderIP, msg.senderPort) With {.pip = prip, .pport = prport}
         Dim e As Boolean = exists(cr)
         If Not e Then
-            lstreg.Add(cr.id, cr)
+            lstreg.add(cr.ID, cr)
         Else
             cr = lstreg(getname(cr))
         End If

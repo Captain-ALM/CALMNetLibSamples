@@ -5,7 +5,7 @@ Public MustInherit Class NetMarshalBase
     Protected _cl As INetSocket
     Protected _t As Thread = New Thread(AddressOf t_exec)
     Public Event exceptionRaised(ex As Exception)
-    Public Event messageRecieved(msg As Message)
+    Public Event MessageRecieved(msg As IMessage)
 
     Public Sub New(cl As INetSocket)
         _cl = cl
@@ -40,7 +40,7 @@ Public MustInherit Class NetMarshalBase
         End Get
     End Property
 
-    Public MustOverride Function sendMessage(msg As Message) As Boolean
+    Public MustOverride Function sendMessage(msg As IMessage) As Boolean
 
     Protected MustOverride Sub t_exec()
 
@@ -48,7 +48,7 @@ Public MustInherit Class NetMarshalBase
         RaiseEvent exceptionRaised(ex)
     End Sub
 
-    Protected Sub raiseMessageRecieved(msg As Message)
-        RaiseEvent messageRecieved(msg)
+    Protected Sub raiseMessageRecieved(msg As IMessage)
+        RaiseEvent MessageRecieved(msg)
     End Sub
 End Class
