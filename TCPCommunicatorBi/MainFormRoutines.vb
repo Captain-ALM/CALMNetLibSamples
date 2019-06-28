@@ -65,7 +65,7 @@ Partial Public Class MainForm
                 lip.Add(frm.selected_interface.ToString())
             End If
             lport = frm.port
-            cmarshal = New extlib.NetMarshalTCP(frm.selected_interface, frm.port, frm.backlog, frm.buffer)
+            cmarshal = New extlib.NetMarshalTCPBi(frm.selected_interface, frm.port, frm.backlog, frm.buffer)
             addrfam = frm.selected_interface.AddressFamily
             drfrsh = True
         End If
@@ -147,8 +147,6 @@ Partial Public Class MainForm
                     lvi.SubItems.Add(c.name)
                     lvi.SubItems.Add(c.ip)
                     lvi.SubItems.Add(c.port)
-                    lvi.SubItems.Add(c.pip)
-                    lvi.SubItems.Add(c.pport)
                     lstvcm.Items.Add(lvi)
                 End If
             Next

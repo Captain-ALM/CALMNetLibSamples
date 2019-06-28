@@ -16,7 +16,6 @@ Public Class config
         nudrport.Enabled = False
         nudbl.Enabled = False
         chkbxbf.Enabled = False
-        txtbxripaddress.Enabled = False
         selected_interface = interfaces(combbxif.SelectedItem.ToString)
         port = CInt(nudport.Value)
         buffer = chkbxbf.Checked
@@ -28,48 +27,6 @@ Public Class config
         If port < 1 Then
             MsgBox("The Port you entered was too Small! The Port is now 1.", MsgBoxStyle.Exclamation, "Information!")
             port = 1
-        End If
-        prport = CInt(nudrport.Value)
-        If prport > 65535 Then
-            MsgBox("The Port you entered was too Big! The Port is now 65535.", MsgBoxStyle.Exclamation, "Information!")
-            prport = 65535
-        End If
-        If prport < 1 Then
-            MsgBox("The Port you entered was too Small! The Port is now 1.", MsgBoxStyle.Exclamation, "Information!")
-            prport = 1
-        End If
-        If txtbxripaddress.Text = "" Then
-            If selected_interface.AddressFamily = AddressFamily.InterNetwork Then
-                If selected_interface.Equals(IPAddress.Any) Then
-                    txtbxripaddress.Text = IPAddress.Loopback.ToString()
-                Else
-                    txtbxripaddress.Text = selected_interface.ToString()
-                End If
-            ElseIf selected_interface.AddressFamily = AddressFamily.InterNetworkV6 Then
-                If selected_interface.Equals(IPAddress.IPv6Any) Then
-                    txtbxripaddress.Text = IPAddress.IPv6Loopback.ToString()
-                Else
-                    txtbxripaddress.Text = selected_interface.ToString()
-                End If
-            End If
-        End If
-        Dim cip As Boolean = False
-        Try
-            prip = IPAddress.Parse(txtbxripaddress.Text).ToString()
-        Catch ex As InvalidCastException
-            cip = True
-        Catch ex As FormatException
-            cip = True
-        Catch ex As ArgumentException
-            cip = True
-        End Try
-        If cip Then
-            MsgBox("The IP Address you entered was Invalid! The IP Address is now <None>.", MsgBoxStyle.Exclamation, "Information!")
-            If selected_interface.AddressFamily = AddressFamily.InterNetwork Then
-                prip = IPAddress.None.ToString()
-            ElseIf selected_interface.AddressFamily = AddressFamily.InterNetworkV6 Then
-                prip = IPAddress.IPv6None.ToString()
-            End If
         End If
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
@@ -86,7 +43,6 @@ Public Class config
         nudrport.Enabled = False
         chkbxbf.Enabled = False
         nudbl.Enabled = False
-        txtbxripaddress.Enabled = False
         interfaces = getNetworkAdapterIPsAndNames()
         interfaces.Add("Listen on All Interfaces : 0.0.0.0", IPAddress.Any)
         interfaces.Add("Listen on All Interfaces : ::", IPAddress.IPv6Any)
@@ -101,10 +57,10 @@ Public Class config
         chkbxbf.Checked = True
         combbxif.Enabled = True
         nudport.Enabled = True
-        nudrport.Enabled = True
+        nudrport.Enabled = False
+        txtbxripaddress.Enabled = False
         chkbxbf.Enabled = True
         nudbl.Enabled = True
-        txtbxripaddress.Enabled = True
     End Sub
     
     Friend Function getNetworkAdapterIPsAndNames() As Dictionary(Of String, IPAddress)

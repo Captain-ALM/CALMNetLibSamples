@@ -6,8 +6,7 @@ Imports System.Threading
 Public Class NetMarshalTCPBi
     Inherits NetMarshalBase
 
-    Protected _clcol As New List(Of Tuple(Of NetTCPClient, Thread))
-    Protected _slockconnect As New Object()
+    Protected _clcol As New List(Of Tuple(Of NetTCPClient, Thread, String, Integer))
     Protected _slockcolman As New Object()
     Protected _delay As Boolean
     Public Event clientConnected(ip As String, port As Integer)
@@ -32,7 +31,7 @@ Public Class NetMarshalTCPBi
         While _clcol.Count > 0
             For i As Integer = _clcol.Count - 1 To 0 Step -1
                 Try
-                    Dim ct As Tuple(Of NetTCPClient, Thread) = Nothing
+                    Dim ct As Tuple(Of NetTCPClient, Thread, String, Integer) = Nothing
                     SyncLock _slockcolman
                         ct = _clcol(i)
                     End SyncLock
@@ -59,24 +58,30 @@ Public Class NetMarshalTCPBi
 
     Public Overridable Sub connect(iptc As String, ptc As Integer)
         If _cl IsNot Nothing Then
-            SyncLock _slockconnect
-                Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(iptc), ptc) With {.sendBufferSize = UInt16.MaxValue, .receiveBufferSize = UInt16.MaxValue, .noDelay = Not _delay}
-                ccl.open()
-                If ccl.connected And ccl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = CType(_cl, INetConfig).localIPAddress, .senderPort = CType(_cl, INetConfig).localPort, .receiverIP = CType(ccl, INetConfig).remoteIPAddress, .receiverPort = CType(ccl, INetConfig).remotePort})) Then
-                    Dim bts As Byte() = ccl.recieveBytes()
-                    If bts.Length > 0 Then
-                        Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
-                        Dim clt As Thread = New Thread(New ParameterizedThreadStart(AddressOf t_cl_exec))
-                        clt.IsBackground = True
-                        Dim tpl As New Tuple(Of NetTCPClient, Thread)(ccl, clt)
-                        clt.Start(tpl)
-                        SyncLock _slockcolman
-                            _clcol.Add(tpl)
-                        End SyncLock
-                        RaiseEvent clientConnected(iptc, ptc)
-                    End If
+            Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(iptc), ptc) With {.sendBufferSize = UInt16.MaxValue, .receiveBufferSize = UInt16.MaxValue, .noDelay = Not _delay}
+            ccl.open()
+            Dim lip As String = ""
+            Dim lport As Integer = 0
+            Try
+                lip = CType(ccl, INetConfig).localIPAddress
+                lport = CType(ccl, INetConfig).localPort
+            Catch ex As ObjectDisposedException
+                raiseExceptionRaised(ex)
+            End Try
+            If ccl.connected And ccl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = lip, .senderPort = lport, .receiverIP = CType(ccl, INetConfig).remoteIPAddress, .receiverPort = CType(ccl, INetConfig).remotePort})) Then
+                Dim bts As Byte() = ccl.recieveBytes()
+                If bts.Length > 0 Then
+                    Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
+                    Dim clt As Thread = New Thread(New ParameterizedThreadStart(AddressOf t_cl_exec))
+                    clt.IsBackground = True
+                    Dim tpl As New Tuple(Of NetTCPClient, Thread, String, Integer)(ccl, clt, lip, lport)
+                    clt.Start(tpl)
+                    SyncLock _slockcolman
+                        _clcol.Add(tpl)
+                    End SyncLock
+                    RaiseEvent clientConnected(iptc, ptc)
                 End If
-            End SyncLock
+            End If
         End If
     End Sub
 
@@ -92,13 +97,13 @@ Public Class NetMarshalTCPBi
             If _cl IsNot Nothing Then
                 For i As Integer = _clcol.Count - 1 To 0 Step -1
                     Try
-                        Dim ct As Tuple(Of NetTCPClient, Thread) = Nothing
+                        Dim ct As Tuple(Of NetTCPClient, Thread, String, Integer) = Nothing
                         SyncLock _slockcolman
                             ct = _clcol(i)
                         End SyncLock
                         If CType(ct.Item1, INetConfig).remoteIPAddress = ipr And CType(ct.Item1, INetConfig).remotePort = pr Then
                             If ct.Item1 Is Nothing Or ct.Item2 Is Nothing Then Return False
-                            If ct.Item1.connected And ct.Item2.IsAlive And ct.Item1.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = CType(_cl, INetConfig).localIPAddress, .senderPort = CType(_cl, INetConfig).localPort, .receiverIP = CType(ct.Item1, INetConfig).remoteIPAddress, .receiverPort = CType(ct.Item1, INetConfig).remotePort})) Then
+                            If ct.Item1.connected And ct.Item2.IsAlive And ct.Item1.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = ct.Item3, .senderPort = ct.Item4, .receiverIP = CType(ct.Item1, INetConfig).remoteIPAddress, .receiverPort = CType(ct.Item1, INetConfig).remotePort})) Then
                                 toret = True
                             Else
                                 toret = False
@@ -114,11 +119,35 @@ Public Class NetMarshalTCPBi
         End Get
     End Property
 
+    Public Overridable ReadOnly Property internalTCPSocket(ipr As String, pr As Integer) As NetTCPClient
+        Get
+            Dim toret As NetTCPClient = Nothing
+            If _cl IsNot Nothing Then
+                For i As Integer = _clcol.Count - 1 To 0 Step -1
+                    Try
+                        Dim ct As Tuple(Of NetTCPClient, Thread, String, Integer) = Nothing
+                        SyncLock _slockcolman
+                            ct = _clcol(i)
+                        End SyncLock
+                        If CType(ct.Item1, INetConfig).remoteIPAddress = ipr And CType(ct.Item1, INetConfig).remotePort = pr Then
+                            If ct.Item1 Is Nothing Or ct.Item2 Is Nothing Then Return Nothing
+                            toret = ct.Item1
+                            Exit For
+                        End If
+                    Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
+                        raiseExceptionRaised(ex)
+                    End Try
+                Next
+            End If
+            Return toret
+        End Get
+    End Property
+
     Public Overridable Sub disconnect(iptdc As String, ptdc As Integer)
         If _cl IsNot Nothing Then
             For i As Integer = _clcol.Count - 1 To 0 Step -1
                 Try
-                    Dim ct As Tuple(Of NetTCPClient, Thread) = Nothing
+                    Dim ct As Tuple(Of NetTCPClient, Thread, String, Integer) = Nothing
                     SyncLock _slockcolman
                         ct = _clcol(i)
                     End SyncLock
@@ -140,7 +169,7 @@ Public Class NetMarshalTCPBi
         If _cl IsNot Nothing Then
             For i As Integer = _clcol.Count - 1 To 0 Step -1
                 Try
-                    Dim ct As Tuple(Of NetTCPClient, Thread) = Nothing
+                    Dim ct As Tuple(Of NetTCPClient, Thread, String, Integer) = Nothing
                     SyncLock _slockcolman
                         ct = _clcol(i)
                     End SyncLock
@@ -168,7 +197,7 @@ Public Class NetMarshalTCPBi
         Dim toret As Boolean = False
         For i As Integer = _clcol.Count - 1 To 0 Step -1
             Try
-                Dim ct As Tuple(Of NetTCPClient, Thread) = Nothing
+                Dim ct As Tuple(Of NetTCPClient, Thread, String, Integer) = Nothing
                 SyncLock _slockcolman
                     ct = _clcol(i)
                 End SyncLock
@@ -193,7 +222,7 @@ Public Class NetMarshalTCPBi
         Dim toret As Boolean = True
         For i As Integer = _clcol.Count - 1 To 0 Step -1
             Try
-                Dim ct As Tuple(Of NetTCPClient, Thread) = Nothing
+                Dim ct As Tuple(Of NetTCPClient, Thread, String, Integer) = Nothing
                 SyncLock _slockcolman
                     ct = _clcol(i)
                 End SyncLock
@@ -215,32 +244,38 @@ Public Class NetMarshalTCPBi
         While _cl IsNot Nothing
             Try
                 While _cl IsNot Nothing AndAlso _cl.listening
-                    SyncLock _slockconnect
-                        If _cl.clientWaiting Then
-                            Dim acl As INetSocket = _cl.acceptClient()
-                            Dim bts As Byte() = acl.recieveBytes()
-                            If bts.Length > 0 Then
-                                Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
-                                If acl.connected And acl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = CType(_cl, INetConfig).localIPAddress, .senderPort = CType(_cl, INetConfig).localPort, .receiverIP = CType(acl, INetConfig).remoteIPAddress, .receiverPort = CType(acl, INetConfig).remotePort})) Then
-                                    Dim clt As Thread = New Thread(New ParameterizedThreadStart(AddressOf t_cl_exec))
-                                    clt.IsBackground = True
-                                    Dim tpl As New Tuple(Of NetTCPClient, Thread)(acl, clt)
-                                    clt.Start(tpl)
-                                    SyncLock _slockcolman
-                                        _clcol.Add(tpl)
-                                    End SyncLock
-                                    RaiseEvent clientConnected(msg.senderIP, msg.senderPort)
-                                End If
+                    If _cl.clientWaiting Then
+                        Dim acl As INetSocket = _cl.acceptClient()
+                        Dim lip As String = ""
+                        Dim lport As Integer = 0
+                        Try
+                            lip = CType(acl, INetConfig).localIPAddress
+                            lport = CType(acl, INetConfig).localPort
+                        Catch ex As ObjectDisposedException
+                            raiseExceptionRaised(ex)
+                        End Try
+                        Dim bts As Byte() = acl.recieveBytes()
+                        If bts.Length > 0 Then
+                            Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
+                            If acl.connected And acl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = lip, .senderPort = lport, .receiverIP = CType(acl, INetConfig).remoteIPAddress, .receiverPort = CType(acl, INetConfig).remotePort})) Then
+                                Dim clt As Thread = New Thread(New ParameterizedThreadStart(AddressOf t_cl_exec))
+                                clt.IsBackground = True
+                                Dim tpl As New Tuple(Of NetTCPClient, Thread, String, Integer)(acl, clt, lip, lport)
+                                clt.Start(tpl)
+                                SyncLock _slockcolman
+                                    _clcol.Add(tpl)
+                                End SyncLock
+                                RaiseEvent clientConnected(msg.senderIP, msg.senderPort)
                             End If
                         End If
-                    End SyncLock
+                    End If
                     For i As Integer = _clcol.Count - 1 To 0 Step -1
                         Try
-                            Dim ct As Tuple(Of NetTCPClient, Thread) = Nothing
+                            Dim ct As Tuple(Of NetTCPClient, Thread, String, Integer) = Nothing
                             SyncLock _slockcolman
                                 ct = _clcol(i)
                             End SyncLock
-                            If Not (ct.Item1.connected And ct.Item2.IsAlive And ct.Item1.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = CType(_cl, INetConfig).localIPAddress, .senderPort = CType(_cl, INetConfig).localPort, .receiverIP = CType(ct.Item1, INetConfig).remoteIPAddress, .receiverPort = CType(ct.Item1, INetConfig).remotePort}))) Then
+                            If Not (ct.Item1.connected And ct.Item2.IsAlive And ct.Item1.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = ct.Item3, .senderPort = ct.Item4, .receiverIP = CType(ct.Item1, INetConfig).remoteIPAddress, .receiverPort = CType(ct.Item1, INetConfig).remotePort}))) Then
                                 ct.Item1.close()
                                 SyncLock _slockcolman
                                     _clcol.Remove(ct)
@@ -270,7 +305,7 @@ Public Class NetMarshalTCPBi
     End Sub
 
     Protected Overridable Sub t_cl_exec(obj As Object)
-        Dim tpl As Tuple(Of NetTCPClient, Thread) = CType(obj, Tuple(Of NetTCPClient, Thread))
+        Dim tpl As Tuple(Of NetTCPClient, Thread, String, Integer) = CType(obj, Tuple(Of NetTCPClient, Thread, String, Integer))
         While _cl IsNot Nothing AndAlso tpl.Item1.connected AndAlso tpl.Item1.connected
             Try
                 While tpl.Item1.connected

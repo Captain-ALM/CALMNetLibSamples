@@ -151,6 +151,30 @@ Public Class NetMarshalTCP
         End Get
     End Property
 
+    Public Overridable ReadOnly Property internalTCPSocket(ipr As String, pr As Integer) As Tuple(Of NetTCPClient, NetTCPClient)
+        Get
+            Dim toret As Tuple(Of NetTCPClient, NetTCPClient) = Nothing
+            If _cl IsNot Nothing Then
+                For i As Integer = _clcol.Count - 1 To 0 Step -1
+                    Try
+                        Dim ct As Tuple(Of NetTCPClient, NetTCPClient, Thread) = Nothing
+                        SyncLock _slockcolman
+                            ct = _clcol(i)
+                        End SyncLock
+                        If CType(ct.Item2, INetConfig).remoteIPAddress = ipr And CType(ct.Item2, INetConfig).remotePort = pr Then
+                            If ct.Item1 Is Nothing Or ct.Item2 Is Nothing Or ct.Item3 Is Nothing Then Return Nothing
+                            toret = New Tuple(Of NetTCPClient, NetTCPClient)(ct.Item1, ct.Item2)
+                            Exit For
+                        End If
+                    Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
+                        raiseExceptionRaised(ex)
+                    End Try
+                Next
+            End If
+            Return toret
+        End Get
+    End Property
+
     Public Overridable Sub disconnect(iptdc As String, ptdc As Integer)
         If _cl IsNot Nothing Then
             For i As Integer = _clcol.Count - 1 To 0 Step -1
@@ -195,7 +219,7 @@ Public Class NetMarshalTCP
                     raiseExceptionRaised(ex)
                 End Try
             Next
-                Thread.Sleep(200)
+            Thread.Sleep(200)
         End If
     End Sub
 

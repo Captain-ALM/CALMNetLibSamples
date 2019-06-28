@@ -13,6 +13,7 @@ Public Class config
         combbxif.Enabled = False
         nudport.Enabled = False
         nudrport.Enabled = False
+        txtbxripaddress.Enabled = False
         selected_interface = interfaces(combbxif.SelectedItem.ToString)
         port = CInt(nudport.Value)
         buffer = chkbxbf.Checked
@@ -79,6 +80,7 @@ Public Class config
         combbxif.Enabled = False
         nudport.Enabled = False
         nudrport.Enabled = False
+        txtbxripaddress.Enabled = False
         interfaces = getNetworkAdapterIPsAndNames()
         interfaces.Add("Listen on All Interfaces : 0.0.0.0", IPAddress.Any)
         interfaces.Add("Listen on All Interfaces : ::", IPAddress.IPv6Any)
@@ -93,6 +95,7 @@ Public Class config
         combbxif.Enabled = True
         nudport.Enabled = True
         nudrport.Enabled = True
+        txtbxripaddress.Enabled = True
     End Sub
     
     Friend Function getNetworkAdapterIPsAndNames() As Dictionary(Of String, IPAddress)

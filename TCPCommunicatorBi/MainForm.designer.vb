@@ -50,8 +50,6 @@ Partial Class MainForm
         Me.columnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.columnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.columnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.splitContainer2 = New System.Windows.Forms.SplitContainer()
         Me.groupBox2 = New System.Windows.Forms.GroupBox()
         Me.tableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
@@ -134,7 +132,7 @@ Partial Class MainForm
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(490, 36)
         Me.Label2.TabIndex = 3
-        Me.Label2.Text = "UDP Communicator:"
+        Me.Label2.Text = "TCP Bidirectional Communicator:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'splitContainer1
@@ -156,7 +154,7 @@ Partial Class MainForm
         Me.splitContainer1.Panel2.Controls.Add(Me.splitContainer2)
         Me.splitContainer1.Panel2MinSize = 100
         Me.splitContainer1.Size = New System.Drawing.Size(584, 252)
-        Me.splitContainer1.SplitterDistance = 124
+        Me.splitContainer1.SplitterDistance = 125
         Me.splitContainer1.TabIndex = 4
         '
         'groupBox1
@@ -166,7 +164,7 @@ Partial Class MainForm
         Me.groupBox1.Location = New System.Drawing.Point(0, 0)
         Me.groupBox1.Margin = New System.Windows.Forms.Padding(1)
         Me.groupBox1.Name = "groupBox1"
-        Me.groupBox1.Size = New System.Drawing.Size(584, 124)
+        Me.groupBox1.Size = New System.Drawing.Size(584, 125)
         Me.groupBox1.TabIndex = 0
         Me.groupBox1.TabStop = False
         Me.groupBox1.Text = "Client Manager"
@@ -185,7 +183,7 @@ Partial Class MainForm
         Me.tableLayoutPanel3.RowCount = 2
         Me.tableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
         Me.tableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
-        Me.tableLayoutPanel3.Size = New System.Drawing.Size(578, 105)
+        Me.tableLayoutPanel3.Size = New System.Drawing.Size(578, 106)
         Me.tableLayoutPanel3.TabIndex = 0
         '
         'tableLayoutPanel4
@@ -240,7 +238,7 @@ Partial Class MainForm
         Me.butcmcls.Name = "butcmcls"
         Me.butcmcls.Size = New System.Drawing.Size(118, 21)
         Me.butcmcls.TabIndex = 4
-        Me.butcmcls.Text = "Clear Clients"
+        Me.butcmcls.Text = "Disconnect All Clients"
         Me.butcmcls.UseVisualStyleBackColor = True
         '
         'butcmadd
@@ -251,7 +249,7 @@ Partial Class MainForm
         Me.butcmadd.Name = "butcmadd"
         Me.butcmadd.Size = New System.Drawing.Size(115, 21)
         Me.butcmadd.TabIndex = 0
-        Me.butcmadd.Text = "Add Client"
+        Me.butcmadd.Text = "Connect Client"
         Me.butcmadd.UseVisualStyleBackColor = True
         '
         'butcmrem
@@ -262,19 +260,19 @@ Partial Class MainForm
         Me.butcmrem.Name = "butcmrem"
         Me.butcmrem.Size = New System.Drawing.Size(115, 21)
         Me.butcmrem.TabIndex = 1
-        Me.butcmrem.Text = "Remove Client"
+        Me.butcmrem.Text = "Disconnect Client"
         Me.butcmrem.UseVisualStyleBackColor = True
         '
         'lstvcm
         '
-        Me.lstvcm.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader10, Me.columnHeader1, Me.columnHeader2, Me.columnHeader3, Me.ColumnHeader8, Me.ColumnHeader9})
+        Me.lstvcm.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader10, Me.columnHeader1, Me.columnHeader2, Me.columnHeader3})
         Me.lstvcm.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lstvcm.FullRowSelect = True
         Me.lstvcm.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lstvcm.Location = New System.Drawing.Point(3, 24)
         Me.lstvcm.Name = "lstvcm"
         Me.lstvcm.ShowGroups = False
-        Me.lstvcm.Size = New System.Drawing.Size(572, 78)
+        Me.lstvcm.Size = New System.Drawing.Size(572, 79)
         Me.lstvcm.TabIndex = 1
         Me.lstvcm.UseCompatibleStateImageBehavior = False
         Me.lstvcm.View = System.Windows.Forms.View.Details
@@ -299,16 +297,6 @@ Partial Class MainForm
         Me.columnHeader3.Text = "Client Port"
         Me.columnHeader3.Width = 90
         '
-        'ColumnHeader8
-        '
-        Me.ColumnHeader8.Text = "My IP Address"
-        Me.ColumnHeader8.Width = 120
-        '
-        'ColumnHeader9
-        '
-        Me.ColumnHeader9.Text = "My Port"
-        Me.ColumnHeader9.Width = 90
-        '
         'splitContainer2
         '
         Me.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
@@ -326,7 +314,7 @@ Partial Class MainForm
         Me.splitContainer2.Panel2.Controls.Add(Me.groupBox3)
         Me.splitContainer2.Panel2Collapsed = True
         Me.splitContainer2.Panel2MinSize = 150
-        Me.splitContainer2.Size = New System.Drawing.Size(584, 124)
+        Me.splitContainer2.Size = New System.Drawing.Size(584, 123)
         Me.splitContainer2.SplitterDistance = 150
         Me.splitContainer2.TabIndex = 0
         '
@@ -337,7 +325,7 @@ Partial Class MainForm
         Me.groupBox2.Location = New System.Drawing.Point(0, 0)
         Me.groupBox2.Margin = New System.Windows.Forms.Padding(0)
         Me.groupBox2.Name = "groupBox2"
-        Me.groupBox2.Size = New System.Drawing.Size(584, 124)
+        Me.groupBox2.Size = New System.Drawing.Size(584, 123)
         Me.groupBox2.TabIndex = 0
         Me.groupBox2.TabStop = False
         Me.groupBox2.Text = "Message Manager"
@@ -355,7 +343,7 @@ Partial Class MainForm
         Me.tableLayoutPanel5.RowCount = 2
         Me.tableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
         Me.tableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.tableLayoutPanel5.Size = New System.Drawing.Size(578, 105)
+        Me.tableLayoutPanel5.Size = New System.Drawing.Size(578, 104)
         Me.tableLayoutPanel5.TabIndex = 0
         '
         'tableLayoutPanel8
@@ -370,7 +358,7 @@ Partial Class MainForm
         Me.tableLayoutPanel8.Controls.Add(Me.butmmprev, 0, 0)
         Me.tableLayoutPanel8.Controls.Add(Me.butmmnew, 0, 0)
         Me.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tableLayoutPanel8.Location = New System.Drawing.Point(0, 84)
+        Me.tableLayoutPanel8.Location = New System.Drawing.Point(0, 83)
         Me.tableLayoutPanel8.Margin = New System.Windows.Forms.Padding(0)
         Me.tableLayoutPanel8.Name = "tableLayoutPanel8"
         Me.tableLayoutPanel8.RowCount = 1
@@ -432,7 +420,7 @@ Partial Class MainForm
         Me.lstvmm.Location = New System.Drawing.Point(3, 3)
         Me.lstvmm.Name = "lstvmm"
         Me.lstvmm.ShowGroups = False
-        Me.lstvmm.Size = New System.Drawing.Size(572, 78)
+        Me.lstvmm.Size = New System.Drawing.Size(572, 77)
         Me.lstvmm.TabIndex = 1
         Me.lstvmm.UseCompatibleStateImageBehavior = False
         Me.lstvmm.View = System.Windows.Forms.View.Details
@@ -680,7 +668,7 @@ Partial Class MainForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(300, 200)
         Me.Name = "MainForm"
-        Me.Text = "UDP Communicator"
+        Me.Text = "TCP Bidirectional Communicator"
         Me.tableLayoutPanel1.ResumeLayout(False)
         Me.splitContainer1.Panel1.ResumeLayout(False)
         Me.splitContainer1.Panel2.ResumeLayout(False)
@@ -752,6 +740,4 @@ Partial Class MainForm
     Private WithEvents butcmci As System.Windows.Forms.Button
     Friend WithEvents butabout As System.Windows.Forms.Button
     Friend WithEvents ColumnHeader10 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader8 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader9 As System.Windows.Forms.ColumnHeader
 End Class

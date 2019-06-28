@@ -142,7 +142,7 @@ Partial Public Class MainForm
                 lvi.SubItems.Add(c.ip)
                 lvi.SubItems.Add(c.port)
                 lvi.SubItems.Add(c.pip)
-                lvi.SubItems.Add(c.port)
+                lvi.SubItems.Add(c.pport)
                 lstvcm.Items.Add(lvi)
             Next
         End SyncLock
