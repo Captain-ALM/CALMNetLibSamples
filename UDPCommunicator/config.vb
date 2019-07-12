@@ -52,6 +52,7 @@ Public Class config
         Dim cip As Boolean = False
         Try
             prip = IPAddress.Parse(txtbxripaddress.Text).ToString()
+            If IPAddress.Parse(txtbxripaddress.Text).AddressFamily <> selected_interface.AddressFamily Then cip = True
         Catch ex As InvalidCastException
             cip = True
         Catch ex As FormatException
@@ -59,6 +60,27 @@ Public Class config
         Catch ex As ArgumentException
             cip = True
         End Try
+        If cip Then
+            cip = False
+            Try
+                Dim ips As IPAddress() = Dns.GetHostAddresses(txtbxripaddress.Text)
+                If ips Is Nothing Then Throw New ArgumentException()
+                If ips.Length = 0 Then Throw New ArgumentException()
+                For Each c As IPAddress In ips
+                    If c.AddressFamily = selected_interface.AddressFamily Then
+                        prip = c.ToString()
+                        cip = False
+                        Exit For
+                    Else
+                        cip = True
+                    End If
+                Next
+            Catch ex As ArgumentException
+                cip = True
+            Catch ex As SocketException
+                cip = True
+            End Try
+        End If
         If cip Then
             MsgBox("The IP Address you entered was Invalid! The IP Address is now <None>.", MsgBoxStyle.Exclamation, "Information!")
             If selected_interface.AddressFamily = AddressFamily.InterNetwork Then

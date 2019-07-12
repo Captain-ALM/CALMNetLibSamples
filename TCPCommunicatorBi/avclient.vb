@@ -45,6 +45,7 @@ Partial Public Class avclient
         Dim port As Integer = 5432
         Try
             ip = IPAddress.Parse(txtbxipaddress.Text)
+            If ip.AddressFamily <> addrfam Then Throw New ArgumentException()
             gok = True
         Catch ex As InvalidCastException
             cip = True
@@ -53,6 +54,29 @@ Partial Public Class avclient
         Catch ex As ArgumentException
             cip = True
         End Try
+        If cip Then
+            cip = False
+            Try
+                Dim ips As IPAddress() = Dns.GetHostAddresses(txtbxipaddress.Text)
+                If ips Is Nothing Then Throw New ArgumentException()
+                If ips.Length = 0 Then Throw New ArgumentException()
+                For Each c As IPAddress In ips
+                    If c.AddressFamily = addrfam Then
+                        ip = c
+                        gok = True
+                        cip = False
+                        Exit For
+                    Else
+                        cip = True
+                        gok = False
+                    End If
+                Next
+            Catch ex As ArgumentException
+                cip = True
+            Catch ex As SocketException
+                cip = True
+            End Try
+        End If
         port = CInt(nudport.Value)
         If port > 65535 Then
             MsgBox("The Port you entered was too Big! The Port is now 65535.", MsgBoxStyle.Exclamation, "Information!")
