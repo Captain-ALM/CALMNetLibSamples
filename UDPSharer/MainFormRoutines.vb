@@ -90,16 +90,12 @@ Partial Public Class MainForm
                         txtbxmpv.Text &= smsg.header & Chr(13) & Chr(10)
                         txtbxmpv.Text &= "File Name: " & Chr(13) & Chr(10)
                         txtbxmpv.Text &= smsg.name & Chr(13) & Chr(10)
-                        txtbxmpv.Text &= "File Size (Bytes): " & Chr(13) & Chr(10)
-                        txtbxmpv.Text &= smsg.data.Length & Chr(13) & Chr(10)
                     Else
                         txtbxmpv.Text &= "Sender: " & smsg.senderaddr & ":" & smsg.senderport & Chr(13) & Chr(10)
                         txtbxmpv.Text &= "Header: " & Chr(13) & Chr(10)
                         txtbxmpv.Text &= smsg.header & Chr(13) & Chr(10)
                         txtbxmpv.Text &= "File Name: " & Chr(13) & Chr(10)
                         txtbxmpv.Text &= smsg.name & Chr(13) & Chr(10)
-                        txtbxmpv.Text &= "File Size (Bytes): " & Chr(13) & Chr(10)
-                        txtbxmpv.Text &= smsg.data.Length & Chr(13) & Chr(10)
                     End If
                 Catch ex As Exception When (TypeOf ex Is ArgumentOutOfRangeException Or TypeOf ex Is IndexOutOfRangeException)
                     drfrsh = True

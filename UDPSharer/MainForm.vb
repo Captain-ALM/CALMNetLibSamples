@@ -51,11 +51,11 @@ Partial Public Class MainForm
         Else
             cr = lstreg(getname(cr))
         End If
-        lstmsg.Add(New Mail(msg) With {.wassent = False, .refnum = 0, .sndnom = cr.ID, .disnom = cr.name, .locpth = cr.ppath & "\" & CType(msg, FileMsg).name})
         Try
             IO.File.WriteAllBytes(cr.ppath & "\" & CType(msg, FileMsg).name, CType(msg, FileMsg).bytes)
         Catch ex As IO.IOException
         End Try
+        lstmsg.Add(New Mail(msg) With {.wassent = False, .refnum = 0, .sndnom = cr.ID, .disnom = cr.name, .locpth = cr.ppath & "\" & CType(msg, FileMsg).name, .data = New Byte() {}})
         drfrsh = True
     End Sub
 
@@ -151,10 +151,13 @@ Partial Public Class MainForm
             For Each msg As Mail In frm.genmsgs()
                 msg.wassent = True
                 lstmsg.Add(msg)
+                msg.data = frm.getfile()
                 cmarshal.sendMessage(msg.msg)
+                msg.data = Nothing
             Next
             drfrsh = True
         End If
+        frm.dat = Nothing
         If Not frm.Disposing And Not frm.IsDisposed Then frm.Dispose()
         frm = Nothing
     End Sub
@@ -182,10 +185,13 @@ Partial Public Class MainForm
             For Each msg As Mail In frm.genmsgs()
                 msg.wassent = True
                 lstmsg.Add(msg)
+                msg.data = frm.getfile()
                 cmarshal.sendMessage(msg.msg)
+                msg.data = Nothing
             Next
             drfrsh = True
         End If
+        frm.dat = Nothing
         If Not frm.Disposing And Not frm.IsDisposed Then frm.Dispose()
         frm = Nothing
     End Sub
@@ -222,8 +228,17 @@ Partial Public Class MainForm
     Sub Butmpech_Click(sender As Object, e As EventArgs) Handles butmpech.Click
         If lstvmm.SelectedIndices.Count = 1 Then
             Dim smsg As Mail = lstmsg(lstvmm.SelectedIndices(0))
+            Dim dat As Byte() = Nothing
+            If IO.File.Exists(smsg.locpth) Then
+                dat = IO.File.ReadAllBytes(smsg.locpth)
+            Else
+                MsgBox("File to Send Not Found.", MsgBoxStyle.Exclamation + MsgBoxStyle.OkOnly)
+                Return
+            End If
             If smsg.wassent Then
+                smsg.data = dat
                 cmarshal.sendMessage(smsg.msg)
+                smsg.data = Nothing
             Else
                 Dim nmsg As Mail = New Mail(smsg.refnum, smsg.header, smsg.name, smsg.data)
                 nmsg.recaddr = smsg.senderaddr
@@ -238,7 +253,9 @@ Partial Public Class MainForm
                 nmsg.wassent = True
                 nmsg.sndnom = "Me"
                 lstmsg.Add(nmsg)
+                nmsg.data = dat
                 cmarshal.sendMessage(nmsg.msg)
+                nmsg.data = Nothing
             End If
         End If
     End Sub

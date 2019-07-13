@@ -44,14 +44,17 @@ Partial Public Class msgve
             txtbxfp.Enabled = False
             butbrw.Enabled = False
             If txtbxfp.Text = "" Then Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            If Not IO.File.Exists(txtbxfp.Text) Then Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            If Not IO.File.Exists(txtbxfp.Text) Then
+                MsgBox("File to Send Not Found.", MsgBoxStyle.Exclamation + MsgBoxStyle.OkOnly)
+                Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            End If
             If Me.DialogResult = Windows.Forms.DialogResult.Cancel Then
                 Me.Close()
             Else
                 Try
                     dat = IO.File.ReadAllBytes(txtbxfp.Text)
                     If dat.Length > 16384 Then
-                        MsgBox("File Bigger than 16384 Bytes!", MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation, "Sending Size Exceeded")
+                        MsgBox("File Bigger than 16384 Bytes!", MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation)
                         Me.DialogResult = Windows.Forms.DialogResult.Cancel
                         Me.Close()
                     End If
@@ -170,9 +173,13 @@ Partial Public Class msgve
     Public Function genmsgs() As Mail()
         Dim msgs As New List(Of Mail)
         For Each c As Reg In addrs
-            msgs.Add(New Mail(0, txtbxheader.Text, IO.Path.GetFileName(txtbxfp.Text), dat, c.pip, c.pport, c.ip, c.port) With {.sndnom = "Me", .locpth = txtbxfp.Text})
+            msgs.Add(New Mail(0, txtbxheader.Text, IO.Path.GetFileName(txtbxfp.Text), New Byte() {}, c.pip, c.pport, c.ip, c.port) With {.sndnom = "Me", .locpth = txtbxfp.Text})
         Next
         Return msgs.ToArray()
+    End Function
+
+    Public Function getfile() As Byte()
+        Return dat
     End Function
 
     Private Sub butbrw_Click(sender As Object, e As EventArgs) Handles butbrw.Click
