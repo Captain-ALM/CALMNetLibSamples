@@ -6,7 +6,8 @@ Imports System.Threading
 Public Class NetMarshalUDP
     Inherits NetMarshalBase
 
-    Protected Const udpmsgsize As Integer = 65500
+    Protected Const buffersize As Integer = 65536
+    Protected Const udpmsgsize As Integer = 65408
     Protected _f As AddressFamily
 
     Public Sub New(iptb As IPAddress, ptb As Integer)

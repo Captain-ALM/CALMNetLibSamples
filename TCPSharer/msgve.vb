@@ -1,6 +1,5 @@
 ﻿Imports System.Net
 Imports System.Windows.Forms
-
 '
 ' Created by SharpDevelop.
 ' User: Alfred
@@ -9,7 +8,7 @@ Imports System.Windows.Forms
 ' 
 ' To change this template use Tools | Options | Coding | Edit Standard Headers.
 '
-Partial Public Class msgve
+Public Partial Class msgve
     Public msg As Mail = Nothing
     Public addrs As New List(Of Reg)
     Friend mode As vemode = vemode.None
@@ -26,7 +25,7 @@ Partial Public Class msgve
     Friend Sub New(m As vemode)
         Me.InitializeComponent()
         mode = m
-        msg = New Mail()
+        msg = New mail()
     End Sub
     Friend Sub New(m1 As vemode, m2 As Mail)
         Me.InitializeComponent()
@@ -54,8 +53,8 @@ Partial Public Class msgve
             Else
                 Try
                     dat = IO.File.ReadAllBytes(txtbxfp.Text)
-                    If dat.Length > 16384 Then
-                        MsgBox("File Bigger than 16384 Bytes!", MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation)
+                    If dat.Length > 16777216 Then
+                        MsgBox("File Bigger than 16777216 Bytes!", MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation)
                         Me.DialogResult = Windows.Forms.DialogResult.Cancel
                         Me.Close()
                         Return
@@ -82,8 +81,8 @@ Partial Public Class msgve
     End Sub
 
     Sub Txtbxheader_TextChanged(sender As Object, e As EventArgs) Handles txtbxheader.TextChanged
-        lblhl.Text = padnum(txtbxheader.Text.Length, 4) & " / 1024"
-        If txtbxheader.Text.Length > 1024 Then txtbxheader.Text = txtbxheader.Text.Substring(0, 1024)
+        lblhl.Text = padnum(txtbxheader.Text.Length, 7) & " / 1048576"
+        If txtbxheader.Text.Length > 1048576 Then txtbxheader.Text = txtbxheader.Text.Substring(0, 1048576)
     End Sub
 
     Private Function padnum(num As Integer, len As Integer) As String
@@ -116,7 +115,7 @@ Partial Public Class msgve
     Friend Sub rfreshaddrs()
         dudrap.Items.Clear()
         dudrap.Text = ""
-        For Each c As Reg In addrs
+        For Each c As reg In addrs
             dudrap.Items.Add(c.name & " <" & c.ID & ">")
         Next
         If dudrap.Items.Count > 0 Then dudrap.SelectedIndex = 0 Else dudrap.SelectedIndex = -1
@@ -217,8 +216,8 @@ Partial Public Class msgve
 End Class
 
 Friend Enum vemode As Integer
-    None = 0
-    View = 1
-    Edit = 2
-    [New] = 3
+	None = 0
+	View = 1
+	Edit = 2
+	[New] = 3
 End Enum

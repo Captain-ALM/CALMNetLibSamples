@@ -263,6 +263,7 @@ Partial Public Class MainForm
                 nmsg.disnom = "Me"
                 lstmsg.Add(nmsg)
                 cmarshal.sendMessage(nmsg.msg)
+                drfrsh = True
             End If
         End If
     End Sub

@@ -6,6 +6,8 @@ Imports System.Threading
 Public Class NetMarshalTCP
     Inherits NetMarshalBase
 
+    Protected Const buffersize As Integer = 16777216 '65536
+    Protected Const tcpmsgsize As Integer = 16777088 '65408
     Protected _clcol As New List(Of Tuple(Of NetTCPClient, NetTCPClient, Thread))
     Protected _slockconnect As New Object()
     Protected _slockcolman As New Object()
@@ -16,14 +18,14 @@ Public Class NetMarshalTCP
     Public Event clientDisconnected(ip As String, port As Integer)
 
     Public Sub New(iptb As IPAddress, ptb As Integer, Optional cbl As Integer = 1, Optional del As Boolean = False)
-        MyBase.New(New NetTCPListener(iptb, ptb) With {.sendBufferSize = UInt16.MaxValue, .receiveBufferSize = UInt16.MaxValue, .noDelay = Not del, .connectionBacklog = cbl})
+        MyBase.New(New NetTCPListener(iptb, ptb) With {.sendBufferSize = tcpmsgsize, .receiveBufferSize = tcpmsgsize, .noDelay = Not del, .connectionBacklog = cbl})
         _myip = iptb.ToString()
         _myport = ptb
         _delay = del
     End Sub
 
     Public Sub New(iptb As IPAddress, ptb As Integer, ipts As IPAddress, pts As Integer, Optional cbl As Integer = 1, Optional del As Boolean = False)
-        MyBase.New(New NetTCPListener(iptb, ptb) With {.sendBufferSize = UInt16.MaxValue, .receiveBufferSize = UInt16.MaxValue, .noDelay = Not del, .connectionBacklog = cbl})
+        MyBase.New(New NetTCPListener(iptb, ptb) With {.sendBufferSize = tcpmsgsize, .receiveBufferSize = tcpmsgsize, .noDelay = Not del, .connectionBacklog = cbl})
         _myip = ipts.ToString()
         _myport = pts
         _delay = del
@@ -72,7 +74,7 @@ Public Class NetMarshalTCP
     Public Overridable Sub connect(iptc As String, ptc As Integer)
         If _cl IsNot Nothing Then
             SyncLock _slockconnect
-                Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(iptc), ptc) With {.sendBufferSize = UInt16.MaxValue, .receiveBufferSize = UInt16.MaxValue, .noDelay = Not _delay}
+                Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(iptc), ptc) With {.sendBufferSize = tcpmsgsize, .receiveBufferSize = tcpmsgsize, .noDelay = Not _delay}
                 ccl.open()
                 If ccl.connected And ccl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = _myip, .senderPort = _myport, .receiverIP = CType(ccl, INetConfig).remoteIPAddress, .receiverPort = CType(ccl, INetConfig).remotePort})) Then
                     Dim acl As INetSocket = _cl.acceptClient()
@@ -96,7 +98,7 @@ Public Class NetMarshalTCP
     Public Overridable Sub connect(iptc As String, ptc As Integer, myip As String, myport As Integer)
         If _cl IsNot Nothing Then
             SyncLock _slockconnect
-                Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(iptc), ptc) With {.sendBufferSize = UInt16.MaxValue, .receiveBufferSize = UInt16.MaxValue, .noDelay = Not _delay}
+                Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(iptc), ptc) With {.sendBufferSize = tcpmsgsize, .receiveBufferSize = tcpmsgsize, .noDelay = Not _delay}
                 ccl.open()
                 If ccl.connected And ccl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = myip, .senderPort = myport, .receiverIP = CType(ccl, INetConfig).remoteIPAddress, .receiverPort = CType(ccl, INetConfig).remotePort})) Then
                     Dim acl As INetSocket = _cl.acceptClient()
@@ -306,7 +308,7 @@ Public Class NetMarshalTCP
                             Dim bts As Byte() = acl.recieveBytes()
                             If bts.Length > 0 Then
                                 Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
-                                Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(msg.senderIP), msg.senderPort) With {.sendBufferSize = UInt16.MaxValue, .receiveBufferSize = UInt16.MaxValue, .noDelay = Not _delay}
+                                Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(msg.senderIP), msg.senderPort) With {.sendBufferSize = tcpmsgsize, .receiveBufferSize = tcpmsgsize, .noDelay = Not _delay}
                                 ccl.open()
                                 If ccl.connected And ccl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = _myip, .senderPort = _myport, .receiverIP = CType(ccl, INetConfig).remoteIPAddress, .receiverPort = CType(ccl, INetConfig).remotePort})) Then
                                     Dim clt As Thread = New Thread(New ParameterizedThreadStart(AddressOf t_cl_exec))

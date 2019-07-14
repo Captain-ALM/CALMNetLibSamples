@@ -6,6 +6,8 @@ Imports System.Threading
 Public Class NetMarshalTCPBi
     Inherits NetMarshalBase
 
+    Protected Const buffersize As Integer = 16777216 '65536
+    Protected Const tcpmsgsize As Integer = 16777088 '65408
     Protected _clcol As New List(Of Tuple(Of NetTCPClient, Thread, String, Integer))
     Protected _slockcolman As New Object()
     Protected _delay As Boolean
@@ -13,7 +15,7 @@ Public Class NetMarshalTCPBi
     Public Event clientDisconnected(ip As String, port As Integer)
 
     Public Sub New(iptb As IPAddress, ptb As Integer, Optional cbl As Integer = 1, Optional del As Boolean = False)
-        MyBase.New(New NetTCPListener(iptb, ptb) With {.sendBufferSize = UInt16.MaxValue, .receiveBufferSize = UInt16.MaxValue, .noDelay = Not del, .connectionBacklog = cbl})
+        MyBase.New(New NetTCPListener(iptb, ptb) With {.sendBufferSize = tcpmsgsize, .receiveBufferSize = tcpmsgsize, .noDelay = Not del, .connectionBacklog = cbl})
         _delay = del
     End Sub
 
@@ -58,7 +60,7 @@ Public Class NetMarshalTCPBi
 
     Public Overridable Sub connect(iptc As String, ptc As Integer)
         If _cl IsNot Nothing Then
-            Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(iptc), ptc) With {.sendBufferSize = UInt16.MaxValue, .receiveBufferSize = UInt16.MaxValue, .noDelay = Not _delay}
+            Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(iptc), ptc) With {.sendBufferSize = tcpmsgsize, .receiveBufferSize = tcpmsgsize, .noDelay = Not _delay}
             ccl.open()
             Dim lip As String = ""
             Dim lport As Integer = 0

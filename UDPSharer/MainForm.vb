@@ -256,6 +256,7 @@ Partial Public Class MainForm
                 nmsg.data = dat
                 cmarshal.sendMessage(nmsg.msg)
                 nmsg.data = Nothing
+                drfrsh = True
             End If
         End If
     End Sub
