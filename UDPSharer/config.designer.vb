@@ -57,7 +57,7 @@ Partial Class config
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(184, 29)
-        Me.TableLayoutPanel1.TabIndex = 5
+        Me.TableLayoutPanel1.TabIndex = 7
         '
         'OK_Button
         '
@@ -197,14 +197,14 @@ Partial Class config
         Me.txtbxdsp.Location = New System.Drawing.Point(113, 193)
         Me.txtbxdsp.Name = "txtbxdsp"
         Me.txtbxdsp.Size = New System.Drawing.Size(364, 20)
-        Me.txtbxdsp.TabIndex = 22
+        Me.txtbxdsp.TabIndex = 5
         '
         'butbrw
         '
         Me.butbrw.Location = New System.Drawing.Point(483, 191)
         Me.butbrw.Name = "butbrw"
         Me.butbrw.Size = New System.Drawing.Size(86, 23)
-        Me.butbrw.TabIndex = 23
+        Me.butbrw.TabIndex = 6
         Me.butbrw.Text = "Browse..."
         Me.butbrw.UseVisualStyleBackColor = True
         '

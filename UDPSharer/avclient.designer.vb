@@ -68,7 +68,7 @@ Partial Class avclient
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(184, 29)
-        Me.TableLayoutPanel1.TabIndex = 5
+        Me.TableLayoutPanel1.TabIndex = 7
         '
         'OK_Button
         '
@@ -191,7 +191,7 @@ Partial Class avclient
         Me.butbrw.Location = New System.Drawing.Point(293, 153)
         Me.butbrw.Name = "butbrw"
         Me.butbrw.Size = New System.Drawing.Size(86, 23)
-        Me.butbrw.TabIndex = 26
+        Me.butbrw.TabIndex = 6
         Me.butbrw.Text = "Browse..."
         Me.butbrw.UseVisualStyleBackColor = True
         '
@@ -200,7 +200,7 @@ Partial Class avclient
         Me.txtbxdsp.Location = New System.Drawing.Point(108, 155)
         Me.txtbxdsp.Name = "txtbxdsp"
         Me.txtbxdsp.Size = New System.Drawing.Size(179, 20)
-        Me.txtbxdsp.TabIndex = 25
+        Me.txtbxdsp.TabIndex = 5
         '
         'Label7
         '

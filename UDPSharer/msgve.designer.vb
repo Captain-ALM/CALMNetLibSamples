@@ -63,7 +63,7 @@ Partial Class msgve
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(184, 29)
-        Me.TableLayoutPanel1.TabIndex = 5
+        Me.TableLayoutPanel1.TabIndex = 6
         '
         'OK_Button
         '
@@ -165,7 +165,7 @@ Partial Class msgve
         Me.butbrw.Location = New System.Drawing.Point(393, 130)
         Me.butbrw.Name = "butbrw"
         Me.butbrw.Size = New System.Drawing.Size(86, 23)
-        Me.butbrw.TabIndex = 29
+        Me.butbrw.TabIndex = 5
         Me.butbrw.Text = "Browse..."
         Me.butbrw.UseVisualStyleBackColor = True
         '
@@ -174,7 +174,7 @@ Partial Class msgve
         Me.txtbxfp.Location = New System.Drawing.Point(63, 132)
         Me.txtbxfp.Name = "txtbxfp"
         Me.txtbxfp.Size = New System.Drawing.Size(324, 20)
-        Me.txtbxfp.TabIndex = 28
+        Me.txtbxfp.TabIndex = 4
         '
         'Label7
         '
