@@ -15,6 +15,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UDPSharer", "UDPSharer\UDPS
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TCPSharer", "TCPSharer\TCPSharer.vbproj", "{85DE0F12-5900-4F57-990E-86A916CD231F}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TCPSharerBi", "TCPSharerBi\TCPSharerBi.vbproj", "{F05AF1B2-45C4-4C72-BF2C-1FE36F08DB92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{85DE0F12-5900-4F57-990E-86A916CD231F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85DE0F12-5900-4F57-990E-86A916CD231F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85DE0F12-5900-4F57-990E-86A916CD231F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F05AF1B2-45C4-4C72-BF2C-1FE36F08DB92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F05AF1B2-45C4-4C72-BF2C-1FE36F08DB92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F05AF1B2-45C4-4C72-BF2C-1FE36F08DB92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F05AF1B2-45C4-4C72-BF2C-1FE36F08DB92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

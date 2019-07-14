@@ -44,7 +44,7 @@ Partial Public Class MainForm
     End Sub
 
     Private Sub msgRec(msg As captainalm.CALMNetLibSamples.extlib.IMessage)
-        Dim cr As Reg = New Reg(msg.senderIP, msg.senderPort) With {.pip = prip, .pport = prport, .ppath = prpath}
+        Dim cr As Reg = New Reg(msg.senderIP, msg.senderPort)
         Dim e As Boolean = exists(cr)
         If Not e Then
             lstreg.add(cr.ID, cr)
@@ -59,10 +59,31 @@ Partial Public Class MainForm
         drfrsh = True
     End Sub
 
+    Private Sub clCon(ip As String, port As Integer)
+        Dim cr As Reg = New Reg(ip, port)
+        Dim e As Boolean = exists(cr)
+        If Not e Then
+            lstreg.Add(cr.id, cr)
+            drfrsh = True
+        End If
+    End Sub
+
+    Private Sub clDCon(ip As String, port As Integer)
+        Dim cr As Reg = New Reg(ip, port)
+        Dim e As Boolean = exists(cr)
+        If e Then
+            Dim nom As String = getname(cr)
+            lstreg.Remove(nom)
+            drfrsh = True
+        End If
+    End Sub
+
     Sub Butrset_Click(sender As Object, e As EventArgs) Handles butrset.Click
         If cmarshal IsNot Nothing Then
             RemoveHandler cmarshal.exceptionRaised, AddressOf marshallError
             RemoveHandler cmarshal.messageRecieved, AddressOf msgRec
+            RemoveHandler cmarshal.clientConnected, AddressOf clCon
+            RemoveHandler cmarshal.clientDisconnected, AddressOf clDCon
             If cmarshal.ready Then cmarshal.close()
             cmarshal = Nothing
         End If
@@ -75,6 +96,10 @@ Partial Public Class MainForm
             t_rf = Nothing
         End If
         configure()
+        Dim vals As Reg() = lstreg.getValues()
+        For Each c As Reg In vals
+            If cmarshal IsNot Nothing Then cmarshal.connect(c.ip, c.port)
+        Next
         If t_rf Is Nothing Then
             t_rf = New Thread(AddressOf rf)
             t_rf.IsBackground = True
@@ -88,6 +113,8 @@ Partial Public Class MainForm
         If cmarshal IsNot Nothing Then
             RemoveHandler cmarshal.exceptionRaised, AddressOf marshallError
             RemoveHandler cmarshal.messageRecieved, AddressOf msgRec
+            RemoveHandler cmarshal.clientConnected, AddressOf clCon
+            RemoveHandler cmarshal.clientDisconnected, AddressOf clDCon
             If cmarshal.ready Then cmarshal.close()
             cmarshal = Nothing
         End If
@@ -104,6 +131,8 @@ Partial Public Class MainForm
         If cmarshal IsNot Nothing Then
             RemoveHandler cmarshal.exceptionRaised, AddressOf marshallError
             RemoveHandler cmarshal.messageRecieved, AddressOf msgRec
+            RemoveHandler cmarshal.clientConnected, AddressOf clCon
+            RemoveHandler cmarshal.clientDisconnected, AddressOf clDCon
             If cmarshal.ready Then cmarshal.close()
             cmarshal = Nothing
         End If
@@ -121,7 +150,10 @@ Partial Public Class MainForm
     Sub Butcmadd_Click(sender As Object, e As EventArgs) Handles butcmadd.Click
         Dim frm As New avclient(avmode.New)
         If frm.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
-            If Not lstreg.exists(frm.reg.ID) And Not exists(frm.reg) Then lstreg.add(frm.reg.ID, frm.reg)
+            If Not lstreg.exists(frm.reg.ID) And Not exists(frm.reg) Then
+                lstreg.add(frm.reg.ID, frm.reg)
+                cmarshal.connect(frm.reg.ip, frm.reg.port)
+            End If
             drfrsh = True
         End If
         If Not frm.Disposing And Not frm.IsDisposed Then frm.Dispose()
@@ -132,7 +164,7 @@ Partial Public Class MainForm
         If lstvcm.SelectedIndices.Count > 0 Then
             Dim cop As List(Of String) = getst(lstvcm.SelectedItems)
             For Each nom As String In cop
-                lstreg.Remove(nom)
+                cmarshal.disconnect(lstreg(nom).ip, lstreg(nom).port)
             Next
             lstvcm.SelectedIndices.Clear()
             drfrsh = True
@@ -164,7 +196,7 @@ Partial Public Class MainForm
 
     Sub Butcmcls_Click(sender As Object, e As EventArgs) Handles butcmcls.Click
         lstvcm.SelectedIndices.Clear()
-        lstreg.clear()
+        cmarshal.disconnectAll()
         drfrsh = True
     End Sub
 
@@ -243,15 +275,11 @@ Partial Public Class MainForm
                 Dim nmsg As Mail = New Mail(smsg.refnum, smsg.header, smsg.name, smsg.data)
                 nmsg.recaddr = smsg.senderaddr
                 nmsg.recport = smsg.senderport
-                If lstreg.exists(smsg.sndnom) Then
-                    nmsg.senderaddr = lstreg(smsg.sndnom).pip
-                    nmsg.senderport = lstreg(smsg.sndnom).pport
-                Else
-                    nmsg.senderaddr = prip
-                    nmsg.senderport = prport
-                End If
+                nmsg.senderaddr = cmarshal.internalTCPSocket(nmsg.recaddr, nmsg.recport).localIPAddress
+                nmsg.senderport = cmarshal.internalTCPSocket(nmsg.recaddr, nmsg.recport).localPort
                 nmsg.wassent = True
                 nmsg.sndnom = "Me"
+                nmsg.disnom = "Me"
                 nmsg.locpth = smsg.locpth
                 lstmsg.Add(nmsg)
                 nmsg.data = dat

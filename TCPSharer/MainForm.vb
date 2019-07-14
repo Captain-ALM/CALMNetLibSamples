@@ -285,6 +285,7 @@ Partial Public Class MainForm
                 nmsg.wassent = True
                 nmsg.sndnom = "Me"
                 nmsg.disnom = "Me"
+                nmsg.locpth = smsg.locpth
                 lstmsg.Add(nmsg)
                 nmsg.data = dat
                 cmarshal.sendMessage(nmsg.msg)
