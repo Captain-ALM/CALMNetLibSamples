@@ -78,7 +78,7 @@ Public Class NetMarshalTCP
                 ccl.open()
                 If ccl.connected And ccl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = _myip, .senderPort = _myport, .receiverIP = CType(ccl, INetConfig).remoteIPAddress, .receiverPort = CType(ccl, INetConfig).remotePort})) Then
                     Dim acl As INetSocket = _cl.acceptClient()
-                    Dim bts As Byte() = acl.recieveBytes()
+                    Dim bts As Byte() = acl.receiveBytes()
                     If bts.Length > 0 Then
                         Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
                         Dim clt As Thread = New Thread(New ParameterizedThreadStart(AddressOf t_cl_exec))
@@ -102,7 +102,7 @@ Public Class NetMarshalTCP
                 ccl.open()
                 If ccl.connected And ccl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = myip, .senderPort = myport, .receiverIP = CType(ccl, INetConfig).remoteIPAddress, .receiverPort = CType(ccl, INetConfig).remotePort})) Then
                     Dim acl As INetSocket = _cl.acceptClient()
-                    Dim bts As Byte() = acl.recieveBytes()
+                    Dim bts As Byte() = acl.receiveBytes()
                     If bts.Length > 0 Then
                         Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
                         Dim clt As Thread = New Thread(New ParameterizedThreadStart(AddressOf t_cl_exec))
@@ -305,7 +305,7 @@ Public Class NetMarshalTCP
                     SyncLock _slockconnect
                         If _cl.clientWaiting Then
                             Dim acl As INetSocket = _cl.acceptClient()
-                            Dim bts As Byte() = acl.recieveBytes()
+                            Dim bts As Byte() = acl.receiveBytes()
                             If bts.Length > 0 Then
                                 Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
                                 Dim ccl As INetSocket = New NetTCPClient(IPAddress.Parse(msg.senderIP), msg.senderPort) With {.sendBufferSize = tcpmsgsize, .receiveBufferSize = tcpmsgsize, .noDelay = Not _delay}
@@ -364,7 +364,7 @@ Public Class NetMarshalTCP
         While _cl IsNot Nothing AndAlso tpl.Item1.connected AndAlso tpl.Item2.connected
             Try
                 While tpl.Item1.connected
-                    Dim bts As Byte() = tpl.Item1.recieveBytes()
+                    Dim bts As Byte() = tpl.Item1.receiveBytes()
                     If bts.Length > 0 Then
                         Dim tech As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
                         If Not (tech.echo = Chr(6)) Then

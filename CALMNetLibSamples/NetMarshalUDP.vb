@@ -49,9 +49,9 @@ Public Class NetMarshalUDP
                 While _cl IsNot Nothing AndAlso _cl.listening
                     Dim bts As Byte() = Nothing
                     If _f = AddressFamily.InterNetwork Then
-                        bts = CType(_cl, INetSocketConnectionless).recieveBytesFrom(IPAddress.Any.ToString, 0)
+                        bts = CType(_cl, INetSocketConnectionless).receiveBytesFrom(IPAddress.Any.ToString, 0)
                     ElseIf _f = AddressFamily.InterNetworkV6 Then
-                        bts = CType(_cl, INetSocketConnectionless).recieveBytesFrom(IPAddress.IPv6Any.ToString, 0)
+                        bts = CType(_cl, INetSocketConnectionless).receiveBytesFrom(IPAddress.IPv6Any.ToString, 0)
                     End If
                     Dim umsg As IMessage = New Serializer().deSerializeObject(Of IMessage)(bts)
                     raiseMessageRecieved(umsg)

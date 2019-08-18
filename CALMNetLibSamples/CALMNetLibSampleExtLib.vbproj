@@ -44,7 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="calmclientandserver">
-      <HintPath>..\..\CALMNetLib\calmclientandserver\bin\Release\calmclientandserver.dll</HintPath>
+      <HintPath>..\..\calmclientandserver\calmclientandserver\bin\Release\calmclientandserver.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

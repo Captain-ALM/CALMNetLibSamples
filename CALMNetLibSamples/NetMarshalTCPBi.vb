@@ -71,7 +71,7 @@ Public Class NetMarshalTCPBi
                 raiseExceptionRaised(ex)
             End Try
             If ccl.connected And ccl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = lip, .senderPort = lport, .receiverIP = CType(ccl, INetConfig).remoteIPAddress, .receiverPort = CType(ccl, INetConfig).remotePort})) Then
-                Dim bts As Byte() = ccl.recieveBytes()
+                Dim bts As Byte() = ccl.receiveBytes()
                 If bts.Length > 0 Then
                     Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
                     Dim clt As Thread = New Thread(New ParameterizedThreadStart(AddressOf t_cl_exec))
@@ -256,7 +256,7 @@ Public Class NetMarshalTCPBi
                         Catch ex As ObjectDisposedException
                             raiseExceptionRaised(ex)
                         End Try
-                        Dim bts As Byte() = acl.recieveBytes()
+                        Dim bts As Byte() = acl.receiveBytes()
                         If bts.Length > 0 Then
                             Dim msg As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
                             If acl.connected And acl.sendBytes(New Serializer().serializeObject(Of EchoMessage)(New EchoMessage(Chr(6)) With {.senderIP = lip, .senderPort = lport, .receiverIP = CType(acl, INetConfig).remoteIPAddress, .receiverPort = CType(acl, INetConfig).remotePort})) Then
@@ -311,7 +311,7 @@ Public Class NetMarshalTCPBi
         While _cl IsNot Nothing AndAlso tpl.Item1.connected AndAlso tpl.Item1.connected
             Try
                 While tpl.Item1.connected
-                    Dim bts As Byte() = tpl.Item1.recieveBytes()
+                    Dim bts As Byte() = tpl.Item1.receiveBytes()
                     If bts.Length > 0 Then
                         Dim tech As EchoMessage = New Serializer().deSerializeObject(Of EchoMessage)(bts)
                         If Not (tech.echo = Chr(6)) Then
