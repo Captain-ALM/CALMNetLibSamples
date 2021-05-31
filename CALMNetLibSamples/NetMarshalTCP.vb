@@ -2,6 +2,7 @@
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Threading
+Imports captainalm.Serialize
 
 Public Class NetMarshalTCP
     Inherits NetMarshalBase

@@ -50,7 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="calmclientandserver">
-      <HintPath>..\..\calmclientandserver\calmclientandserver\bin\Release\calmclientandserver.dll</HintPath>
+      <HintPath>..\..\calmclientandserver-VB.net-client-and-server-library-\calmclientandserver\bin\Debug\calmclientandserver.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

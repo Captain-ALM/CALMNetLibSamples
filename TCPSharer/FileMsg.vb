@@ -1,5 +1,6 @@
 ﻿Imports captainalm.CALMNetLib
 Imports captainalm.CALMNetLibSamples.extlib
+Imports captainalm.Serialize
 
 <Serializable>
 Public Structure FileMsg
@@ -33,7 +34,7 @@ Public Structure FileMsg
 
     Public ReadOnly Property getData As Byte() Implements IMessage.getData
         Get
-            Return New Serializer().serializeObject(Of filemsg)(Me)
+            Return New Serializer().serializeObject(Of FileMsg)(Me)
         End Get
     End Property
 

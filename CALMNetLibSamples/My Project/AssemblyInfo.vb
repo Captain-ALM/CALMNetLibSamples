@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("CALMNetLib Sample Extension Library")> 
 <Assembly: AssemblyCompany("Captain ALM")> 
 <Assembly: AssemblyProduct("CALMNetLib Sample Extension Library")> 
-<Assembly: AssemblyCopyright("Copyright © Captain ALM 2019")> 
+<Assembly: AssemblyCopyright("Copyright © Captain ALM 2021")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.0.0.6")> 
-<Assembly: AssemblyFileVersion("0.0.0.6")> 
+<Assembly: AssemblyVersion("0.0.0.7")> 
+<Assembly: AssemblyFileVersion("0.0.0.7")> 

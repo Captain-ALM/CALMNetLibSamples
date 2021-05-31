@@ -1,4 +1,5 @@
 ﻿Imports captainalm.CALMNetLib
+Imports captainalm.Serialize
 
 <Serializable>
 Public Structure Message
